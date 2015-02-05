@@ -1,6 +1,10 @@
 """ SIMPLE DFA CREATOR """
 """ BY BRET BLACK 2015 """
 
+##########################
+#   METHODS AND CLASSES  #
+##########################
+
 # get the nth letter of the alphabet
 def getStateName(n):
     return chr(ord('a')+n)
@@ -32,6 +36,11 @@ class State:
     def isAccepting(self,isIt):
         self.acceptingState = isIt
 
+
+#####################
+#   START PROGRAM   #
+#####################
+
 # define variables
 states = []
 activeState = 0
@@ -44,7 +53,7 @@ stateToAdd = setStateName("A")
 
 while True:
     stateToAddStr = getStateName(stateToAdd)
-    inp = raw_input ("Add state " + stateToAddStr +" by entering its outputs AB or type \"end\" \n").lower()
+    inp = raw_input ("Add state " + stateToAddStr +" by entering its outputs AB or type \"end\".  \n* indiciates an accepting state.\n").lower()
     if inp == "end":
         break
     else:
@@ -52,12 +61,20 @@ while True:
         inp.split()
 
         #define the converted states
-        inpp = []
+        stateArray = []
 
         # turn characters into letters
-        for i in range(0,len(inp)):
-            inpp.append(setStateName(inp[i]))
-        states.append(inpp)
+        for i in range(0,2):
+            stateArray.append(setStateName(inp[i]))
+
+        # check to see if it is an accepting state
+        accept = False
+        if (len(inp) > 2):
+            if (inp[2] == "*"):
+                accept = True
+
+        newState = State(stateArray,accept)
+        states.append(newState)
 
         #increment state counter
         stateToAdd += 1
@@ -75,8 +92,15 @@ for i in range(0,len(inst)):
     # get the ith instruction
     thisInst = int(inst[i])
 
-    activeState = states[activeState][thisInst]
+    activeState = states[activeState].links[thisInst]
 
 # print result
 print "THE FINAL STATE IS: "
 print getStateName(int(activeState))
+
+# check if it is accepting
+resultAccepted = states[activeState].acceptingState
+if (resultAccepted):
+    print "This is an accepting state." 
+else :
+    print "This is NOT an accepting state."
