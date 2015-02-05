@@ -6,16 +6,12 @@
 #####################
 
 import stateMachine
+import re
 
 # define variables
 states = []
 activeState = []
 nextState = [0]
-endState = 0
-doesEnd = False
-
-# read instructions
-inst = raw_input("Input your instructions: ")
 
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
@@ -29,7 +25,12 @@ while True:
     if inp == "end":
         break
     else:
-        #split along spaces
+        # check to see if it is an accepting state
+        accept = False
+        if (re.match(r"[*]",inp)):
+            accept = True
+
+        #split along commas
         split = inp.strip().split(",")
 
         #split individual states
@@ -37,59 +38,66 @@ while True:
             split[i].split
 
         #define the converted states
-        inpp = []
+        stateArray = []
 
         # turn characters into letters
         for i in range(0,len(split)):
             # create new array space
             newArr = []
-            inpp.append(newArr)
+            stateArray.append(newArr)
 
             # fill nested array
             for j in range(0,len(split[i])):
-                inpp[i].append(stateMachine.setStateName(split[i][j]))
+                stateArray[i].append(stateMachine.setStateName(split[i][j]))
 
         # append
-        states.append(inpp)
+        newState = stateMachine.State(stateArray,accept)
+        states.append(newState)
 
         #increment state counter
         stateToAdd += 1
 
-# split string into array
-inst.split()
 
-# get name of the end state
-end = raw_input("What is the final state?\n").lower()
-endState = stateMachine.setStateName(end)
+while (True):
+    # read instructions
+    inst = raw_input("Input your instructions: ")
 
-print "TRAVERSING THE NFA:"
+    # see if the user is quitting
+    if (inst == "quit"):
+        break
+        
+    # split string into array
+    inst.split()
 
-print states
+    # get name of the end state
+    #end = raw_input("What is the final state?\n").lower()
+    #endState = stateMachine.setStateName(end)
 
-# loop through instructions
-for i in range(0,len(inst)):
-    # update active state
-    activeState = nextState
-    nextState = []
+    print "TRAVERSING THE NFA:"
 
-    # get the ith instruction
-    thisInst = int(inst[i])
+    # loop through instructions
+    for i in range(0,len(inst)):
+        # update active state
+        activeState = nextState
+        nextState = []
 
-    # add to next states
-    for j in range(0,len(activeState)):
-        for k in range(0,len(states[activeState[j]][thisInst])):
-            # check for end
-            if (states[activeState[j]][thisInst][k] == endState):
-                # the end has been reached, exit the loop
-                doesEnd = True
-                i = len(inst)
+        # get the ith instruction
+        thisInst = int(inst[i])
 
-            else:
-                # add to queue
-                nextState.append(states[activeState[j]][thisInst][k])
+        # add to next states
+        for j in range(0,len(activeState)):
+            for k in range(0,len(states[activeState[j]].links[thisInst])):
+                nextState.append(states[activeState[j]].links[thisInst][k])
 
-# print result
-if (doesEnd):
-    print "This instruction set reaches the end"
-else:
-    print "This instruction set does NOT reach the end"
+    # check if it is accepting
+    resultAccepted = False
+    for i in range(0,len(activeState)):
+        if (activeState[i] == True):
+            resultAccepted = True
+            break
+
+    # print result
+    if (resultAccepted):
+        print "This is an accepting state." 
+    else :
+        print "This is NOT an accepting state."
