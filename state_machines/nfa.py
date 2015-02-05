@@ -1,13 +1,11 @@
 """ SIMPLE NFA CREATOR """
 """ BY BRET BLACK 2015 """
 
-# get the nth letter of the alphabet
-def getStateName(n):
-    return chr(ord('a')+n)
+#####################
+#   START PROGRAM   #
+#####################
 
-#get numerical value of the nth letter of the alphabet
-def setStateName(n):
-    return ord(n)-ord('a')
+import stateMachine
 
 # define variables
 states = []
@@ -20,11 +18,11 @@ doesEnd = False
 inst = raw_input("Input your instructions: ")
 
 # add states from input to the state array
-stateToAdd = setStateName("A")
+stateToAdd = stateMachine.setStateName("A")
 
 while True:
     # setup and get input
-    stateToAddStr = getStateName(stateToAdd)
+    stateToAddStr = stateMachine.getStateName(stateToAdd)
     inp = raw_input ("Add state " + stateToAddStr +" by entering its outputs A,BC or type \"end\" \n").lower()
 
     #interpret input
@@ -49,7 +47,7 @@ while True:
 
             # fill nested array
             for j in range(0,len(split[i])):
-                inpp[i].append(setStateName(split[i][j]))
+                inpp[i].append(stateMachine.setStateName(split[i][j]))
 
         # append
         states.append(inpp)
@@ -62,7 +60,7 @@ inst.split()
 
 # get name of the end state
 end = raw_input("What is the final state?\n").lower()
-endState = setStateName(end)
+endState = stateMachine.setStateName(end)
 
 print "TRAVERSING THE NFA:"
 
