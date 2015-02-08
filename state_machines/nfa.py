@@ -27,7 +27,8 @@ while True:
     else:
         # check to see if it is an accepting state
         accept = False
-        if (re.match(r"[*]",inp)):
+        #print re.match(r".*[*]",inp)
+        if (re.match(r".*[*]",inp) != None):
             accept = True
 
         #split along commas
@@ -41,6 +42,7 @@ while True:
         stateArray = []
 
         # turn characters into letters
+        #for i, string in enumerate(split):
         for i in range(0,len(split)):
             # create new array space
             newArr = []
@@ -48,7 +50,9 @@ while True:
 
             # fill nested array
             for j in range(0,len(split[i])):
-                stateArray[i].append(stateMachine.setStateName(split[i][j]))
+                # make sure the state is not an end-state marker
+                if (split[i][j] != "*"):
+                    stateArray[i].append(stateMachine.setStateName(split[i][j]))
 
         # append
         newState = stateMachine.State(stateArray,accept)
@@ -59,6 +63,10 @@ while True:
 
 
 while (True):
+    # reset vars
+    activeState = []
+    nextState = [0]
+
     # read instructions
     inst = raw_input("Input your instructions: ")
 
@@ -92,8 +100,10 @@ while (True):
     # check if it is accepting
     resultAccepted = False
     for i in range(0,len(activeState)):
-        if (activeState[i] == True):
+        if (states[activeState[i]].acceptingState):
             resultAccepted = True
+            print "THE FINAL STATE IS: "
+            print stateMachine.getStateName(int(activeState[i]))
             break
 
     # print result
