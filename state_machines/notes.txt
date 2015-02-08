@@ -1,0 +1,3 @@
+- Change to parse text
+- Read in language size
+- Update to use proper python iteration

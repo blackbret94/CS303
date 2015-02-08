@@ -12,6 +12,7 @@ import re
 states = []
 activeState = []
 nextState = [0]
+langSize = 2; # this will be read in as input later
 
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
@@ -95,8 +96,13 @@ while (True):
         # add to next states
         for j in range(0,len(activeState)):
             for k in range(0,len(states[activeState[j]].links[thisInst])):
+                # add state tied to instruction
                 nextState.append(states[activeState[j]].links[thisInst][k])
 
+                # add epsilon state
+            if (len(states[activeState[j]].links) > langSize):
+                for k in range(0,len(states[activeState[j]].links[langSize])):
+                    nextState.append(states[activeState[j]].links[langSize][k])
     # check if it is accepting
     resultAccepted = False
     for i in range(0,len(activeState)):
