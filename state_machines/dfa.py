@@ -10,31 +10,43 @@ import stateMachine
 # define variables
 states = []
 activeState = 0
+langSize = 0
+#instructionsList = []
 
 # READ STATES
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
 
+# open text file
+machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFile = open(machFileName,'r')
+
+# read language size
+langSize = int(machFile.readline())
+
+# read states
 while True:
     stateToAddStr = stateMachine.getStateName(stateToAdd)
-    inp = raw_input ("Add state " + stateToAddStr +" by entering its outputs AB or type \"end\".  \n* indiciates an accepting state.\n").lower()
-    if inp == "end":
+    inputState = machFile.readline().rstrip('\n').lower()
+    print inputState
+
+    if inputState == "end":
         break
     else:
         #split
-        inp.split()
+        inputState.split()
 
         #define the converted states
         stateArray = []
 
         # turn characters into letters
-        for i in range(0,2):
-            stateArray.append(stateMachine.setStateName(inp[i]))
+        for i in range(0,langSize):
+            stateArray.append(stateMachine.setStateName(inputState[i]))
 
         # check to see if it is an accepting state
         accept = False
-        if (len(inp) > 2):
-            if (inp[2] == "*"):
+        if (len(inputState) > langSize):
+            if (inputState[langSize] == "*"):
                 accept = True
 
         newState = stateMachine.State(stateArray,accept)
@@ -42,13 +54,14 @@ while True:
 
         #increment state counter
         stateToAdd += 1
-# READ INSTRUCTIONS
+
+# read instructions
 while (True):
     # read instructions
-    inst = raw_input("Input your instructions, or type \"quit\": ").lower()
+    inst = machFile.readline().rstrip('\n').lower()
 
-    # see if the user is quitting
-    if (inst == "quit"):
+    # see if EOF has been reached
+    if (inst == ""):
         break
 
     # otherwise, continue
@@ -75,5 +88,5 @@ while (True):
     resultAccepted = states[activeState].acceptingState
     if (resultAccepted):
         print "This is an accepting state." 
-    else :
+    else:
         print "This is NOT an accepting state."

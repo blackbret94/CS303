@@ -1,6 +1,6 @@
 2
 CB*
-AC
+AC*
 BA
 end
 111
