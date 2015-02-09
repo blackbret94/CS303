@@ -12,28 +12,37 @@ import re
 states = []
 activeState = []
 nextState = [0]
-langSize = 2; # this will be read in as input later
+langSize = 0; # this will be read in as input later
 
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
 
+# open text file
+machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFile = open(machFileName,'r')
+
+# read language size
+langSize = int(machFile.readline())
+
 while True:
     # setup and get input
     stateToAddStr = stateMachine.getStateName(stateToAdd)
-    inp = raw_input ("Add state " + stateToAddStr +" by entering its outputs A,BC or type \"end\" \n").lower()
+    #inputState = raw_input ("Add state " + stateToAddStr +" by entering its outputs A,BC or type \"end\" \n").lower()
+    inputState = machFile.readline().rstrip('\n').lower()
+    print inputState
 
     #interpret input
-    if inp == "end":
+    if inputState == "end":
         break
     else:
         # check to see if it is an accepting state
         accept = False
-        #print re.match(r".*[*]",inp)
-        if (re.match(r".*[*]",inp) != None):
+        #print re.match(r".*[*]",inputState)
+        if (re.match(r".*[*]",inputState) != None):
             accept = True
 
         #split along commas
-        split = inp.strip().split(",")
+        split = inputState.strip().split(",")
 
         #split individual states
         for i in range(0,len(split)):
@@ -69,10 +78,10 @@ while (True):
     nextState = [0]
 
     # read instructions
-    inst = raw_input("Input your instructions: ")
+    inst = machFile.readline().rstrip('\n').lower()
 
     # see if the user is quitting
-    if (inst == "quit"):
+    if (inst == ""):
         break
         
     # split string into array
@@ -103,8 +112,11 @@ while (True):
             if (len(states[activeState[j]].links) > langSize):
                 for k in range(0,len(states[activeState[j]].links[langSize])):
                     nextState.append(states[activeState[j]].links[langSize][k])
+
+
     # check if it is accepting
     resultAccepted = False
+    activeState = nextState
     for i in range(0,len(activeState)):
         if (states[activeState[i]].acceptingState):
             resultAccepted = True
