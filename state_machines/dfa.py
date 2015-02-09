@@ -57,6 +57,9 @@ while True:
 
 # read instructions
 while (True):
+    # reset vars
+    activeState = 0
+
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
 
