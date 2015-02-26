@@ -6,6 +6,7 @@
 #####################
 
 import stateMachine
+import stateMinimize
 
 # define variables
 states = []

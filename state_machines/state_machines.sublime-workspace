@@ -1,0 +1,328 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"send",
+				"sendMessage"
+			],
+			[
+				"to",
+				"toAddress"
+			],
+			[
+				"input",
+				"inputState"
+			],
+			[
+				"mach",
+				"machFileName"
+			],
+			[
+				"B",
+				"BLACK"
+			],
+			[
+				"accept",
+				"accept"
+			],
+			[
+				"result",
+				"resultAccepted"
+			],
+			[
+				"acce",
+				"acceptingState"
+			],
+			[
+				"accepting",
+				"accepting"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "dfa.py",
+			"settings":
+			{
+				"buffer_size": 2255,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "stateMachine.py",
+			"settings":
+			{
+				"buffer_size": 996,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "nfa.py",
+			"settings":
+			{
+				"buffer_size": 3687,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 72.0,
+		"selected_items":
+		[
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/auto/bunter_usr10/blackb/CS305/cs305_projects/simplewebbrowser.py",
+		"/usr10/blackb/CS305/cs305_projects/emailclient.py",
+		"/auto/bunter_usr10/blackb/CS305/cs305_projects/emailclient.py",
+		"/auto/bunter_usr10/blackb/Networks/cs305_projects/emailclient.py",
+		"/auto/bunter_usr10/blackb/Networks/cs305_projects/simplewebbrowser.py",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/input_dfa.txt",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/input_mult5_dfa.txt",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/nfa.py",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/stateMachine.py",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/dfa.py",
+		"/usr10/blackb/CS303/state_machines/notes.txt",
+		"/usr10/blackb/CS303/state_machines/input_nfa.txt",
+		"/usr10/blackb/CS303/state_machines/input_dfa.txt",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/input_nfa_epsilon.txt",
+		"/auto/bunter_usr10/blackb/CS200/blackb_paper_one_abstract.txt",
+		"/usr10/blackb/CS303/state_machines/stateMachine.py",
+		"/usr10/blackb/CS303/state_machines/state.py",
+		"/auto/bunter_usr10/blackb/CS303/state_machines/state.py",
+		"/auto/bunter_usr10/blackb/Theory of Computing/dfa.py",
+		"/auto/bunter_usr10/blackb/Theory of Computing/nfa.py",
+		"/auto/bunter_usr10/blackb/Documents/bioassessment/project_dir/app.js",
+		"/auto/bunter_usr10/blackb/Documents/bioassessment/project_dir/studentList.csv"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"print",
+			"socket",
+			"test",
+			"State"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "dfa.py",
+					"settings":
+					{
+						"buffer_size": 2255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								189,
+								189
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "stateMachine.py",
+					"settings":
+					{
+						"buffer_size": 996,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "nfa.py",
+					"settings":
+					{
+						"buffer_size": 3687,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.488028164533,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
