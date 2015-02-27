@@ -36,7 +36,7 @@ def tableFill(states):
             #table[i-1] = []
 
             # set to one
-            if(states[i].getAccepting()!=states[j].getAccepting()):
+            if(states[i].acceptingState!=states[j].acceptingState):
                 table[i-1].append(1)
             else:
                 # set to zero
@@ -48,11 +48,26 @@ def tableFill(states):
     
     # find distinguishable states
     for i in range(1,len(states)):
-        for j in range(0,i):
-            # set to zero
-            table[i][j]=0
+        # get the states connected to this state
+        linkI0 = states[i].links[0]
+        linkI1 = states[i].links[1]
 
-    return partition(table)
+        for j in range(0,i):
+            # get the states connected to this state
+            linkJ0 = states[j].links[0]
+            linkJ1 = states[j].links[1]
+
+            # check difference in 0
+            if(states[linkI0].acceptingState!=states[linkJ0].acceptingState):
+                table[i-1][j]=1
+            else:
+                if(states[linkI1].acceptingState!=states[linkJ1].acceptingState):
+                # check difference in 1
+                    table[i-1][j]=1
+
+    # for debugging
+    printTable(table)
+    #return partition(table)
 
 # partition the states into
 # equvilents

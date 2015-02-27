@@ -58,7 +58,7 @@ while True:
         stateToAdd += 1
 
 # minimize (THIS IS PROBABLY THE RIGHT SPOT???)
-states = stateMinimize.minimizeMachine(states)
+stateMinimize.minimizeMachine(states)
 
 # read instructions
 while (True):
