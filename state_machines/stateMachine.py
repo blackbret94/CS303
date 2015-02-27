@@ -36,3 +36,7 @@ class State:
     # modify whether it is accepting
     def isAccepting(self,isIt):
         self.acceptingState = isIt
+
+    # getter for boo acceptingState
+    def getAccepting(self):
+        return self.acceptingState

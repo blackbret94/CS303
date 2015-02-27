@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"construct",
+				"constructMinimizedMachine"
+			],
+			[
 				"send",
 				"sendMessage"
 			],
@@ -47,7 +51,7 @@
 			"file": "dfa.py",
 			"settings":
 			{
-				"buffer_size": 2255,
+				"buffer_size": 2276,
 				"line_ending": "Unix"
 			}
 		},
@@ -56,6 +60,14 @@
 			"settings":
 			{
 				"buffer_size": 996,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "stateMinimize.py",
+			"settings":
+			{
+				"buffer_size": 1235,
 				"line_ending": "Unix"
 			}
 		},
@@ -104,6 +116,7 @@
 	},
 	"file_history":
 	[
+		"/auto/bunter_usr10/blackb/CS303/state_machines/notes.txt",
 		"/auto/bunter_usr10/blackb/CS305/cs305_projects/simplewebbrowser.py",
 		"/usr10/blackb/CS305/cs305_projects/emailclient.py",
 		"/auto/bunter_usr10/blackb/CS305/cs305_projects/emailclient.py",
@@ -172,15 +185,15 @@
 					"file": "dfa.py",
 					"settings":
 					{
-						"buffer_size": 2255,
+						"buffer_size": 2276,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								189,
-								189
+								757,
+								757
 							]
 						],
 						"settings":
@@ -198,7 +211,7 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -213,8 +226,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								112,
+								112
 							]
 						],
 						"settings":
@@ -231,6 +244,32 @@
 				},
 				{
 					"buffer": 2,
+					"file": "stateMinimize.py",
+					"settings":
+					{
+						"buffer_size": 1235,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1235,
+								1235
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "nfa.py",
 					"settings":
 					{
@@ -241,8 +280,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								1417,
+								1417
 							]
 						],
 						"settings":
@@ -252,7 +291,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 135.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -323,6 +362,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 144.0,
 	"status_bar_visible": true
 }

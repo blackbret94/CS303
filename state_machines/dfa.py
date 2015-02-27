@@ -19,7 +19,8 @@ langSize = 0
 stateToAdd = stateMachine.setStateName("A")
 
 # open text file
-machFileName = raw_input("What is the name of the file you would like to run?\n")
+#machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFileName = "Examples/input_mult5_dfa.txt"
 machFile = open(machFileName,'r')
 
 # read language size
@@ -55,6 +56,9 @@ while True:
 
         #increment state counter
         stateToAdd += 1
+
+# minimize (THIS IS PROBABLY THE RIGHT SPOT???)
+states = stateMinimize.minimizeMachine(states)
 
 # read instructions
 while (True):
