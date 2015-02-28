@@ -20,7 +20,7 @@ stateToAdd = stateMachine.setStateName("A")
 
 # open text file
 #machFileName = raw_input("What is the name of the file you would like to run?\n")
-machFileName = "Examples/input_mult5_dfa.txt"
+machFileName = "Examples/input_dfa_441.txt"
 machFile = open(machFileName,'r')
 
 # read language size

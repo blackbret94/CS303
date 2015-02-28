@@ -43,29 +43,10 @@ def tableFill(states):
                 table[i-1].append(0)
 
 
-    # for debugging
-    printTable(table)
-    
-    # find distinguishable states
-    for i in range(1,len(states)):
-        # get the states connected to this state
-        linkI0 = states[i].links[0]
-        linkI1 = states[i].links[1]
+    for i in range(0,5):
+        table=updateTable(states,table)
 
-        for j in range(0,i):
-            # get the states connected to this state
-            linkJ0 = states[j].links[0]
-            linkJ1 = states[j].links[1]
-
-            # check difference in 0
-            if(states[linkI0].acceptingState!=states[linkJ0].acceptingState):
-                table[i-1][j]=1
-            else:
-                if(states[linkI1].acceptingState!=states[linkJ1].acceptingState):
-                # check difference in 1
-                    table[i-1][j]=1
-
-    # for debugging
+     # for debugging
     printTable(table)
     #return partition(table)
 
@@ -100,3 +81,51 @@ def printTable(table):
     for i in range(0,len(table)):
         stateRow.append(stateMachine.getStateName(i))
     print " ",'[%s]' % ', '.join(map(str, stateRow))
+
+# Finds the distinguishablity of two states, this function
+# is designed to avoid index-out-of-range errors
+# @param table The array table
+# @param s1 The first state
+# @param s2 The second state
+# @return The distinguishablity of s1 and s2
+def checkDistinguishable(table, s1,s2):
+    # use larger state value as the row
+    if s1>s2:
+        return table[s1-1][s2]
+    if s2>s1:
+        return table[s2-1][s1]
+
+# Runs through the table while checking for distinguishable
+# states.  This step should be run several times to ensure
+# accuracy.  I have not come up with a way to determine that
+# it is safe.
+# @param states The state array
+# @param table The table array
+# @return The updated table
+
+def updateTable(states,table):
+    # find distinguishable states
+    for i in range(1,len(states)):
+        # get the states connected to this state
+        linkI0 = states[i].links[0]
+        linkI1 = states[i].links[1]
+
+        for j in range(0,i):
+            # get the states connected to this state
+            linkJ0 = states[j].links[0]
+            linkJ1 = states[j].links[1]
+
+            if states[linkI0].acceptingState!=states[linkJ0].acceptingState:
+                # check difference in 0
+                table[i-1][j]=1
+            elif states[linkI1].acceptingState!=states[linkJ1].acceptingState:
+                # check difference in 1
+                table[i-1][j]=1
+            elif checkDistinguishable(table,linkI0,linkJ0):
+                # check for distinguishable states in 0
+                table[i-1][j]=1
+            elif checkDistinguishable(table,linkI1,linkJ1):
+                # check for distinguishable states in 1
+                table[i-1][j]=1
+
+    return table
