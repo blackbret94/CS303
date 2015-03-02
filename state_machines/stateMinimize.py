@@ -59,11 +59,14 @@ def partition(table,states):
     # iterate through table to find equivalent states
     for i in range(1,len(states)):
         for j in range(0,i):
-            # if the states are equivalent, add to list
             if table[i-1][j]==0:
-                equivalentList=addToEquivalenceTable(equivalentList)
+                # if the states are equivalent, add to list
+                equivalentList=addToEquivalenceTable(equivalentList,i,j)
 
-    return constructMinimizedMachine(state,partitionedMachine)
+    # add distinguishable states to the list
+    equivalentList = finishEquivalenceTable(equivalentList,states)
+    print equivalentList
+    #return constructMinimizedMachine(state,partitionedMachine)
 
 # MAY BE ABLE TO COMBINE WITH PREVIOUS STEP
 # constructs the new machine
@@ -144,3 +147,42 @@ def updateTable(states,table):
 # @param s2 The second state of the equivalent pair
 # @return The updated pairing list
 def addToEquivalenceTable(equivalentList, s1, s2):
+    #iterate through list looking for a match
+    for i,row in enumerate(equivalentList):
+        for j,state in enumerate(row):
+            if s1==state:
+                row.append(s2)
+                return equivalentList
+            if s2==state:
+                row.append(s1)
+                return equivalentList
+
+    # if we are this far, then no equivlent states have been found
+    # so we tack them onto a new row
+    equivalentList.append([])
+    equivalentList[len(equivalentList)-1].append(s1)
+    equivalentList[len(equivalentList)-1].append(s2)
+    return equivalentList
+
+# Runs through the table once, and adds any states that are not included.
+# To achieve this, the full set of states are placed in a seperate list.
+# As states are found, they are removed from the list.  The resulting lists
+# are combined and then returned.
+def finishEquivalenceTable(equivalentList,states):
+    # create array of states
+    remainingStates = []
+
+    for i, state in enumerate(states):
+        remainingStates.append(i)
+
+    # iterate through equivalentList removing states
+    for i,row in enumerate(equivalentList):
+        for j,state in enumerate(row):
+            remainingStates.remove(state)
+
+    # add remaining states
+    for i, state in enumerate(remainingStates):
+        equivalentList.append([])
+        equivalentList[len(equivalentList)-1].append(state)
+
+    return equivalentList
