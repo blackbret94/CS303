@@ -76,15 +76,23 @@ def partition(table,states):
 # @return The minimized machine
 def constructMinimizedMachine(oldMachine, partition):
     # create new machine 
+    minimizedMachine = []
+
     for i, state in enumerate(partition):
         # get equivalents for the links
         l0 = findEquivalentIndex(partition,oldMachine[i].links[0])
         l1 = findEquivalentIndex(partition,oldMachine[i].links[1])
 
-        #newState = stateMachine.State()asdfasdfasd
+        # create list of links
+        linkList = [l0,l1]
 
-        # create new state and add
+        # create state
+        newState = stateMachine.State(linkList,oldMachine[i].acceptingState)
 
+        # add to machine
+        minimizedMachine.append(newState)
+
+    # return the new machine
     return minimizedMachine
 
 # Prints the table in a more desirable form
