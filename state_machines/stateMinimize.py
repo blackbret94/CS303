@@ -48,14 +48,20 @@ def tableFill(states):
 
      # for debugging
     printTable(table)
-    #return partition(table)
+    return partition(table,states)
 
-# partition the states into
-# equvilents
-# @param table The results of the
-#        table-fill algorithm
-def partition(table):
-    # do stuff
+# partition the states into equvilents
+# @param table The results of the table-fill algorithm
+# @param states The original state machine 
+def partition(table,states):
+    equivalentList = [];
+
+    # iterate through table to find equivalent states
+    for i in range(1,len(states)):
+        for j in range(0,i):
+            # if the states are equivalent, add to list
+            if table[i-1][j]==0:
+                equivalentList=addToEquivalenceTable(equivalentList)
 
     return constructMinimizedMachine(state,partitionedMachine)
 
@@ -129,3 +135,12 @@ def updateTable(states,table):
                 table[i-1][j]=1
 
     return table
+
+# Adds to the list of equivalent states.  Checks to see
+# if an equivalent state has already been found, and adds 
+# to that row if it has.  Otherwise, it creates a new row.
+# @param equivalentList The current list of equvalent states
+# @param s1 The first state of the equivalent pair
+# @param s2 The second state of the equivalent pair
+# @return The updated pairing list
+def addToEquivalenceTable(equivalentList, s1, s2):
