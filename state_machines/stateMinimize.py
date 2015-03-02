@@ -54,6 +54,7 @@ def tableFill(states):
 # @param table The results of the table-fill algorithm
 # @param states The original state machine 
 def partition(table,states):
+    # declare list
     equivalentList = [];
 
     # iterate through table to find equivalent states
@@ -66,14 +67,23 @@ def partition(table,states):
     # add distinguishable states to the list
     equivalentList = finishEquivalenceTable(equivalentList,states)
     print equivalentList
-    #return constructMinimizedMachine(state,partitionedMachine)
+    return constructMinimizedMachine(states,equivalentList)
 
 # MAY BE ABLE TO COMBINE WITH PREVIOUS STEP
 # constructs the new machine
 # @param oldMachine the original machine
-# @param partition the results of the previous
-#        function
+# @param partitioned results of the previous function  
+# @return The minimized machine
 def constructMinimizedMachine(oldMachine, partition):
+    # create new machine 
+    for i, state in enumerate(partition):
+        # get equivalents for the links
+        l0 = findEquivalentIndex(partition,oldMachine[i].links[0])
+        l1 = findEquivalentIndex(partition,oldMachine[i].links[1])
+
+        #newState = stateMachine.State()asdfasdfasd
+
+        # create new state and add
 
     return minimizedMachine
 
@@ -186,3 +196,19 @@ def finishEquivalenceTable(equivalentList,states):
         equivalentList[len(equivalentList)-1].append(state)
 
     return equivalentList
+
+# Iterates through the equvalentList and finds the index
+# of the equivalent state
+# @param equivalentList The list of equivalent states
+# @param index The index to search for
+def findEquivalentIndex(equivalentList,index):
+    # iterate through list looking for index
+    for i, row in enumerate(equivalentList):
+        for j, state in enumerate(row):
+            if state==index:
+                # return the index equivalent to the original state
+                return i
+
+    # if we got this far this is a problem
+    print "An error occured in finding an equivalent state"
+    return -1
