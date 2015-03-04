@@ -43,8 +43,8 @@ def tableFill(states):
                 table[i-1].append(0)
 
 
-    for i in range(0,5):
-        table=updateTable(states,table)
+    # run through the table until no changes are detected
+    updateTable(states,table,0)
 
      # for debugging
     printTable(table)
@@ -130,7 +130,10 @@ def checkDistinguishable(table, s1,s2):
 # @param table The table array
 # @return The updated table
 
-def updateTable(states,table):
+def updateTable(states,table,counter):
+    # boolean to detect changes
+    hasChanged = False
+
     # find distinguishable states
     for i in range(1,len(states)):
         # get the states connected to this state
@@ -142,20 +145,41 @@ def updateTable(states,table):
             linkJ0 = states[j].links[0]
             linkJ1 = states[j].links[1]
 
+            # SIMPLIFY THIS PART LATER
             if states[linkI0].acceptingState!=states[linkJ0].acceptingState:
                 # check difference in 0
-                table[i-1][j]=1
+                if table[i-1][j]==0:
+                    table[i-1][j]=1
+                    hasChanged = True
             elif states[linkI1].acceptingState!=states[linkJ1].acceptingState:
                 # check difference in 1
-                table[i-1][j]=1
+                if table[i-1][j]==0:
+                    table[i-1][j]=1
+                    hasChanged = True
             elif checkDistinguishable(table,linkI0,linkJ0):
                 # check for distinguishable states in 0
-                table[i-1][j]=1
+                if table[i-1][j]==0:
+                    table[i-1][j]=1
+                    hasChanged = True
             elif checkDistinguishable(table,linkI1,linkJ1):
                 # check for distinguishable states in 1
-                table[i-1][j]=1
+                if table[i-1][j]==0:
+                    table[i-1][j]=1
+                    hasChanged = True
 
-    return table
+    # run again if changes are detected
+    if hasChanged:
+        # check for infinite loop
+        if counter>len(states)*50:
+            print "This table appears to be caught in an infinite loop"
+            return table
+        else:
+            return updateTable(states,table,counter+1)
+
+    else:
+        # the table has not changed
+        print "The table has changed {} times".format(counter)
+        return table
 
 # Adds to the list of equivalent states.  Checks to see
 # if an equivalent state has already been found, and adds 
