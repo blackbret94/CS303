@@ -48,10 +48,26 @@
 	"buffers":
 	[
 		{
+			"file": "pda.py",
+			"settings":
+			{
+				"buffer_size": 1369,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "dfa.py",
 			"settings":
 			{
-				"buffer_size": 2410,
+				"buffer_size": 2417,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "nfa.py",
+			"settings":
+			{
+				"buffer_size": 3687,
 				"line_ending": "Unix"
 			}
 		},
@@ -64,26 +80,10 @@
 			}
 		},
 		{
-			"file": "Examples/input_mult5_dfa.txt",
-			"settings":
-			{
-				"buffer_size": 64,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "stateMinimize.py",
 			"settings":
 			{
-				"buffer_size": 2793,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "nfa.py",
-			"settings":
-			{
-				"buffer_size": 3687,
+				"buffer_size": 8171,
 				"line_ending": "Unix"
 			}
 		}
@@ -111,7 +111,12 @@
 	},
 	"console":
 	{
-		"height": 125.0
+		"height": 125.0,
+		"history":
+		[
+			"start",
+			"run"
+		]
 	},
 	"distraction_free":
 	{
@@ -124,6 +129,11 @@
 	},
 	"file_history":
 	[
+		"/home/bret/CS303/state_machines/nfa.py",
+		"/home/bret/CS303/state_machines/stateMinimize.py",
+		"/home/bret/CS303/state_machines/Examples/input_mult5_dfa.txt",
+		"/home/bret/CS303/state_machines/stateMachine.py",
+		"/home/bret/CS303/state_machines/dfa.py",
 		"/auto/bunter_usr10/blackb/CS303/state_machines/Examples/input_dfa.txt",
 		"/auto/bunter_usr10/blackb/CS303/state_machines/notes.txt",
 		"/auto/bunter_usr10/blackb/CS305/cs305_projects/simplewebbrowser.py",
@@ -186,23 +196,57 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "dfa.py",
+					"file": "pda.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2410,
+						"buffer_size": 1369,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1446,
-								1446
+								405,
+								405
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "dfa.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2003,
+								2003
 							]
 						],
 						"settings":
@@ -212,25 +256,26 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 765.0,
+						"translation.y": 969.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "stateMachine.py",
+					"buffer": 2,
+					"file": "nfa.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 996,
+						"buffer_size": 3687,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								700,
-								700
+								26,
+								26
 							]
 						],
 						"settings":
@@ -246,11 +291,41 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "Examples/input_mult5_dfa.txt",
+					"buffer": 3,
+					"file": "stateMachine.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 64,
+						"buffer_size": 996,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								891,
+								891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "stateMinimize.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8171,
 						"regions":
 						{
 						},
@@ -263,72 +338,12 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 3,
-					"file": "stateMinimize.py",
-					"settings":
-					{
-						"buffer_size": 2793,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1900,
-								1900
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1035.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "nfa.py",
-					"settings":
-					{
-						"buffer_size": 3687,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1417,
-								1417
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 135.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -374,6 +389,7 @@
 		]
 	},
 	"menu_visible": true,
+	"project": "state_machines.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -395,10 +411,24 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 144.0,
-	"status_bar_visible": true
+	"side_bar_width": 160.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

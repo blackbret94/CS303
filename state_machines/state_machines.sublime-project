@@ -2,7 +2,12 @@
 	"folders":
 	[
 		{
+			"follow_symlinks": true,
 			"path": "/auto/bunter_usr10/blackb/CS303/state_machines"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/home/bret/CS303/state_machines"
 		}
 	]
 }
