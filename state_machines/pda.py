@@ -6,9 +6,7 @@
 #####################
 
 import stateMachine
-
-# define tree
-def tree(): return defaultdict(tree)
+import tree
 
 # controls the PDA
 class PDAController:
@@ -18,7 +16,7 @@ class PDAController:
 		file = "pdaExample.txt"
 
 		# create tree to hold instantaneous descriptions
-		instTree = list()
+		instTree = Tree()
 
 		# parse input string
 		inputString = "1001"
@@ -56,29 +54,54 @@ class PDAController:
 		return PDA
 
 	# generates a tree from the PDA and input string
-	def run(self,inputString,PDA):
+	def run(self,inputString,thisPDA):
 		# string to array
 		inputArray = list(inputString)
 
 		# pop from string
 		for i,val in inputString:
+			# get top of stack and current state
+			stackTop = thisPDA.stack(len(thisPDA.stack)
+
+
+			# match a transition function
+			for j,function in transitionFunction
+
 			# add an InstantaneousDescription node to each live branch of the tree
+
+	# reads a transition function
+	# @param stack The list representing the stack
+	# @param transFunction the instance of transitionFunction we are reading from
+	def readTransitionFunction(self,stack,transFunction):
+		# pop from stack
+		if(transitionFunction.pairs)
+		# push to stack
+
+		# change state
 			
 
 # defines a PDA machine
 class PDA:
 	# blank constructor
 	def __init__(self):
-		# do stuff
+		# this should never be called
 
 	# accepts seven inputs
 	def __init__(self,states,inputSymbols,stackAlphabet,transitionFunction,startState,startSymbol,acceptingStates):
-		# do stuff
+		# save params
+		self.states = states
+		self.inputSymbols = inputSymbols
+		self.stackAlphabet = stackAlphabet
+		self.transitionFunction = transitionFunction
+		self.startState = startState
+		self.startSymbol = startSymbol
+		self.acceptingStates = acceptingStates
 		
+		self.stack = list() #empty stack
 
 
 # defines a transition function
-class transitionFunction:
+class TransitionFunction:
 	# blank constructor
 	def __init__(self):
 		# do stuff
@@ -89,7 +112,11 @@ class transitionFunction:
 	# @param X stack symbol
 	# @param pairs The output pairs
 	def __init__(self,q,a,X,pairs):
-		# do stuff
+		# save params as instance vars
+		self.q = q
+		self.a = a 
+		self.X = X
+		self.pairs = pairs
 
 # defines an instantaneous description
 class InstantaneousDescription:
@@ -108,4 +135,7 @@ class InstantaneousDescription:
 		# mark as incomplete
 		complete = False
 
-		# do stuff
+		# save params as instance vars
+		self.q = q
+		self.w = w
+		self.r = r
