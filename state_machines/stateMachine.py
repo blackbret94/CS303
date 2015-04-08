@@ -36,3 +36,13 @@ class State:
     # modify whether it is accepting
     def isAccepting(self,isIt):
         self.acceptingState = isIt
+
+# node of a PDA
+class PDANode:
+    def __init__(self):
+        self.remainingInput = list()
+        self.stackContents = list()
+
+    def __init__(self,remain,stack):
+        self.remainingInput = remain
+        self.stackContents = stack

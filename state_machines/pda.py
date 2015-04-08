@@ -1,141 +1,127 @@
-"""  PDA CREATOR  """
-""" BY BRET BLACK """
+""" SIMPLE PDA CREATOR """
+""" BY BRET BLACK 2015 """
 
 #####################
 #   START PROGRAM   #
 #####################
 
 import stateMachine
-import tree
+import re
 
-# controls the PDA
-class PDAController:
-	# blank constructor
-	def __init__(self):
-		# get file
-		file = "pdaExample.txt"
+# define variables
+states = []
+activeState = []
+nextState = [0]
+langSize = 0; # this will be read in as input later
 
-		# create tree to hold instantaneous descriptions
-		instTree = Tree()
+# add states from input to the state array
+stateToAdd = stateMachine.setStateName("A")
 
-		# parse input string
-		inputString = "1001"
+# open text file
+machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFile = open(machFileName,'r')
 
-		# make PDA
-		pda = makePDA(file)
+# read language size
+langSize = int(machFile.readline())
 
-		# run
-		run(inputString,pda)
+while True:
+    # setup and get input
+    stateToAddStr = stateMachine.getStateName(stateToAdd)
+    #inputState = raw_input ("Add state " + stateToAddStr +" by entering its outputs A,BC or type \"end\" \n").lower()
+    inputState = machFile.readline().rstrip('\n').lower()
+    print inputState
 
-	# creates a PDA from a text file
-	def makePDA(self,file):
-		# read states and accepting states
-		states = list()
-		acceptingStates = list()
+    #interpret input
+    if inputState == "end":
+        break
+    else:
+        # check to see if it is an accepting state
+        accept = False
+        #print re.match(r".*[*]",inputState)
+        if (re.match(r".*[*]",inputState) != None):
+            accept = True
 
-		# read input symbols
-		inputSymbols = list()
+        #split along commas
+        split = inputState.strip().split(",")
 
-		# read stackAlphabet
-		stackAlphabet = list()
+        #split individual states
+        for i in range(0,len(split)):
+            split[i].split
 
-		#read transition functions
-		transitionFunction = list()
+        #define the converted states
+        stateArray = []
 
-		# read start state
-		startState = stateMachine.State()
+        # turn characters into letters
+        #for i, string in enumerate(split):
+        for i in range(0,len(split)):
+            # create new array space
+            newArr = []
+            stateArray.append(newArr)
 
-		# read start symbol
-		startSymbol = list()
+            # fill nested array
+            for j in range(0,len(split[i])):
+                # make sure the state is not an end-state marker
+                if (split[i][j] != "*"):
+                    stateArray[i].append(stateMachine.setStateName(split[i][j]))
 
-		# create PDA
-		pda = PDA(states,inputSymbols,stackAlphabet,transitionFunction,startState,startSymbol,acceptingStates)
+        # append
+        newState = stateMachine.State(stateArray,accept)
+        states.append(newState)
 
-		return PDA
-
-	# generates a tree from the PDA and input string
-	def run(self,inputString,thisPDA):
-		# string to array
-		inputArray = list(inputString)
-
-		# pop from string
-		for i,val in inputString:
-			# get top of stack and current state
-			stackTop = thisPDA.stack(len(thisPDA.stack)
-
-
-			# match a transition function
-			for j,function in transitionFunction
-
-			# add an InstantaneousDescription node to each live branch of the tree
-
-	# reads a transition function
-	# @param stack The list representing the stack
-	# @param transFunction the instance of transitionFunction we are reading from
-	def readTransitionFunction(self,stack,transFunction):
-		# pop from stack
-		if(transitionFunction.pairs)
-		# push to stack
-
-		# change state
-			
-
-# defines a PDA machine
-class PDA:
-	# blank constructor
-	def __init__(self):
-		# this should never be called
-
-	# accepts seven inputs
-	def __init__(self,states,inputSymbols,stackAlphabet,transitionFunction,startState,startSymbol,acceptingStates):
-		# save params
-		self.states = states
-		self.inputSymbols = inputSymbols
-		self.stackAlphabet = stackAlphabet
-		self.transitionFunction = transitionFunction
-		self.startState = startState
-		self.startSymbol = startSymbol
-		self.acceptingStates = acceptingStates
-		
-		self.stack = list() #empty stack
+        #increment state counter
+        stateToAdd += 1
 
 
-# defines a transition function
-class TransitionFunction:
-	# blank constructor
-	def __init__(self):
-		# do stuff
+while (True):
+    # reset vars
+    activeState = []
+    nextState = [0]
 
-	# accepts four inputs 
-	# @param q The start state
-	# @param a Input symbol or epsilon
-	# @param X stack symbol
-	# @param pairs The output pairs
-	def __init__(self,q,a,X,pairs):
-		# save params as instance vars
-		self.q = q
-		self.a = a 
-		self.X = X
-		self.pairs = pairs
+    # read instructions
+    inst = machFile.readline().rstrip('\n').lower()
 
-# defines an instantaneous description
-class InstantaneousDescription:
-	# blank constructor
-	def __init__(self):
-		# mark as incomplete
-		complete = False
+    # see if the user is quitting
+    if (inst == ""):
+        break
+        
+    # split string into array
+    inst.split()
 
-		# do stuff
+    print "TRAVERSING THE PDA:"
 
-	# constructor with three inputs 
-	# @param q The state
-	# @param w The remaining input
-	# @param r The stack contents
-	def __init__(self,q,w,r):
-		# mark as incomplete
-		complete = False
+    # loop through instructions
+    for i in range(0,len(inst)):
+        # update active state
+        activeState = nextState
+        nextState = []
 
-		# save params as instance vars
-		self.q = q
-		self.w = w
-		self.r = r
+        # get the ith instruction
+        thisInst = int(inst[i])
+
+        # add to next states
+        for j in range(0,len(activeState)):
+            for k in range(0,len(states[activeState[j]].links[thisInst])):
+                # add state tied to instruction
+                nextState.append(states[activeState[j]].links[thisInst][k])
+
+                # add epsilon state
+            if (len(states[activeState[j]].links) > langSize):
+                for k in range(0,len(states[activeState[j]].links[langSize])):
+                    nextState.append(states[activeState[j]].links[langSize][k])
+
+
+    # check if it is accepting
+    resultAccepted = False
+    activeState = nextState
+    for i in range(0,len(activeState)):
+        if (states[activeState[i]].acceptingState):
+            resultAccepted = True
+            print "THE FINAL STATE IS: "
+            print stateMachine.getStateName(int(activeState[i]))
+            break
+
+    # print result
+    if (resultAccepted):
+        print "This is an accepting state." 
+    else :
+        print "This is NOT an accepting state."
