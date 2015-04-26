@@ -52,6 +52,8 @@ for i,s in statesAccepting:
 
 ### ADD TRANSITION ARCS ###
 while True:
+    inputState = machFile.readline().rstrip('\n').lower()
+
     #interpret input
     if inputState == "end":
         break
