@@ -17,8 +17,10 @@ def setStateName(n):
 class State:
     # blank constructor
     def __init__(self):
-        # handles the array of lists, accepting 0, 1, or epsilon
+        # handles the array of lists, accepting 0, 1, or epsilon. Links can hold
+        # states or transitions, depending on the machine
         self.links = []
+        
         # is an accepting state?
         self.acceptingState = False
 
@@ -54,8 +56,9 @@ class PDAarc:
         self.consumeInput = 0
         self.consumeStack = 0
         self.newStack = 0
+        self.nextState = 0
 
-    def __init__(self,consumeInput,consumeStack,newStack):
+    def __init__(self,consumeInput,consumeStack,newStack,nextState):
         # the input symbol to consume
         self.consumeInput = consumeInput
 
@@ -64,3 +67,6 @@ class PDAarc:
 
         # the new head of the stack (may be epsilon)
         self.newStack = newStack
+
+        # this is the state the arc is linked to
+        self.nextState = nextState

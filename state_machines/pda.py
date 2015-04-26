@@ -12,7 +12,8 @@ import re
 states = []
 activeState = []
 nextState = [0]
-langSize = 0; # this will be read in as input later
+stack = [-1] # starts with -1 unless otherwise specified
+langSize = 0 # this will be read in as input later
 
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
@@ -21,16 +22,36 @@ stateToAdd = stateMachine.setStateName("A")
 machFileName = raw_input("What is the name of the file you would like to run?\n")
 machFile = open(machFileName,'r')
 
+### READ SETUP INFORMATION ###
 # read language size
 langSize = int(machFile.readline())
 
-while True:
-    # setup and get input
-    stateToAddStr = stateMachine.getStateName(stateToAdd)
-    #inputState = raw_input ("Add state " + stateToAddStr +" by entering its outputs A,BC or type \"end\" \n").lower()
-    inputState = machFile.readline().rstrip('\n').lower()
-    print inputState
+# read stack
+possibleStack = machFile.readline()
+if(possibleStack != "null"):
+    possibleStack=possibleStack.split()
+    stack = map(int,possibleStack)
 
+# read state count
+stateCount = int(machFile.readline())
+
+# create states
+for i in range(0,stateCount):
+    states.append(stateMachine.State())
+
+# read accepting states
+statesAccepting = machFile.readline().split()
+
+# set states to accepting
+for i,s in statesAccepting:
+    # convert to number
+    ss = stateMachine.setStateName(s)
+
+    # set to accepting
+    states[ss].isAccepting(True)
+
+### ADD TRANSITION ARCS ###
+while True:
     #interpret input
     if inputState == "end":
         break
@@ -41,37 +62,23 @@ while True:
         if (re.match(r".*[*]",inputState) != None):
             accept = True
 
-        #split along commas
+        # split along commas
         split = inputState.strip().split(",")
 
-        #split individual states
-        for i in range(0,len(split)):
-            split[i].split
+        # read each value
+        startState = stateMachine.getStateName(inputState[0])
+        endState = stateMachine.getStateName(inputState[1])
+        consumedInput = inputState[2]
+        consumedStack = inputState[3]
+        newStack = inputState[4]
 
-        #define the converted states
-        stateArray = []
+        # create new arc
+        newArc = stateMachine.PDAarc(consumedInput,consumedStack,newStack,endState)
 
-        # turn characters into letters
-        #for i, string in enumerate(split):
-        for i in range(0,len(split)):
-            # create new array space
-            newArr = []
-            stateArray.append(newArr)
+        # add arc
+        states[startState].links.append(newArc)
 
-            # fill nested array
-            for j in range(0,len(split[i])):
-                # make sure the state is not an end-state marker
-                if (split[i][j] != "*"):
-                    stateArray[i].append(stateMachine.setStateName(split[i][j]))
-
-        # append
-        newState = stateMachine.State(stateArray,accept)
-        states.append(newState)
-
-        #increment state counter
-        stateToAdd += 1
-
-
+### TEST INPUTS ###
 while (True):
     # reset vars
     activeState = []
