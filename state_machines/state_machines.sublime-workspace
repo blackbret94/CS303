@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"accepting",
+				"acceptingStates"
+			],
+			[
+				"transi",
+				"transitionFunction"
+			],
+			[
+				"trans",
+				"transitionFunction"
+			],
+			[
 				"construct",
 				"constructMinimizedMachine"
 			],
@@ -38,20 +50,25 @@
 			[
 				"acce",
 				"acceptingState"
-			],
-			[
-				"accepting",
-				"accepting"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "tree.py",
+			"settings":
+			{
+				"buffer_size": 350,
+				"line_ending": "Unix",
+				"name": "\"\"\" A TREE CLASS \"\"\""
+			}
+		},
+		{
 			"file": "pda.py",
 			"settings":
 			{
-				"buffer_size": 1369,
+				"buffer_size": 3548,
 				"line_ending": "Unix"
 			}
 		},
@@ -75,15 +92,7 @@
 			"file": "stateMachine.py",
 			"settings":
 			{
-				"buffer_size": 996,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "stateMinimize.py",
-			"settings":
-			{
-				"buffer_size": 8171,
+				"buffer_size": 1235,
 				"line_ending": "Unix"
 			}
 		}
@@ -129,11 +138,17 @@
 	},
 	"file_history":
 	[
-		"/home/bret/CS303/state_machines/nfa.py",
-		"/home/bret/CS303/state_machines/stateMinimize.py",
-		"/home/bret/CS303/state_machines/Examples/input_mult5_dfa.txt",
-		"/home/bret/CS303/state_machines/stateMachine.py",
+		"/home/bret/CS303/state_machines/pda.py",
+		"/home/bret/Computer Networks/project2_code.c",
+		"/var/tmp/kdecache-bret/krun/4421_0_project2_code.c",
 		"/home/bret/CS303/state_machines/dfa.py",
+		"/home/bret/CS303/state_machines/nfa.py",
+		"/home/bret/CS303/state_machines/stateMachine.py",
+		"/home/bret/CS303/state_machines/stateMinimize.py",
+		"/home/bret/Computer Networks/project2_code",
+		"/home/bret/project2_code",
+		"/home/bret/Networks/project01_notes_blackb.txt",
+		"/home/bret/CS303/state_machines/Examples/input_mult5_dfa.txt",
 		"/auto/bunter_usr10/blackb/CS303/state_machines/Examples/input_dfa.txt",
 		"/auto/bunter_usr10/blackb/CS303/state_machines/notes.txt",
 		"/auto/bunter_usr10/blackb/CS305/cs305_projects/simplewebbrowser.py",
@@ -196,32 +211,62 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "pda.py",
+					"file": "tree.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1369,
+						"buffer_size": 350,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								405,
-								405
+								178,
+								178
 							]
 						],
 						"settings":
 						{
+							"auto_name": "\"\"\" A TREE CLASS \"\"\"",
 							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "pda.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3548,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2309,
+								2309
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -233,7 +278,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 1,
+					"buffer": 2,
 					"file": "dfa.py",
 					"semi_transient": false,
 					"settings":
@@ -245,8 +290,8 @@
 						"selection":
 						[
 							[
-								2003,
-								2003
+								1563,
+								1563
 							]
 						],
 						"settings":
@@ -256,13 +301,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 969.0,
+						"translation.y": 450.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "nfa.py",
 					"semi_transient": false,
 					"settings":
@@ -274,8 +319,8 @@
 						"selection":
 						[
 							[
-								26,
-								26
+								0,
+								0
 							]
 						],
 						"settings":
@@ -285,55 +330,26 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "stateMachine.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 996,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								891,
-								891
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1305.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "stateMinimize.py",
+					"file": "stateMachine.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8171,
+						"buffer_size": 1235,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1235,
+								1235
 							]
 						],
 						"settings":
@@ -357,7 +373,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -379,7 +395,7 @@
 		"cols":
 		[
 			0.0,
-			0.478456092461,
+			0.494827468401,
 			1.0
 		],
 		"rows":
@@ -426,7 +442,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 160.0,
+	"side_bar_width": 228.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

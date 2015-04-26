@@ -46,3 +46,21 @@ class PDANode:
     def __init__(self,remain,stack):
         self.remainingInput = remain
         self.stackContents = stack
+
+# PDA transition
+class PDAarc:
+    def __init__(self):
+        # should never be used 
+        self.consumeInput = 0
+        self.consumeStack = 0
+        self.newStack = 0
+
+    def __init__(self,consumeInput,consumeStack,newStack):
+        # the input symbol to consume
+        self.consumeInput = consumeInput
+
+        # the stack symbol to consume (may be epsilon)
+        self.consumeStack = consumeStack
+
+        # the new head of the stack (may be epsilon)
+        self.newStack = newStack
