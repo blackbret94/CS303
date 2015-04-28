@@ -7,6 +7,7 @@
 
 import stateMachine
 import re
+import tree
 
 # define variables
 states = []
@@ -86,6 +87,12 @@ while (True):
     activeState = []
     nextState = [0]
 
+    # create tree
+    resultTree = tree.Tree()
+
+    # create head
+    resultTree.setHeadNewNode(stateMachine.State())
+
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
 
@@ -113,7 +120,7 @@ while (True):
                 # add state tied to instruction
                 nextState.append(states[activeState[j]].links[thisInst][k])
 
-                # add epsilon state
+            # add epsilon state
             if (len(states[activeState[j]].links) > langSize):
                 for k in range(0,len(states[activeState[j]].links[langSize])):
                     nextState.append(states[activeState[j]].links[langSize][k])

@@ -42,10 +42,12 @@ class State:
 # node of a PDA
 class PDANode:
     def __init__(self):
+        self.state = "none"
         self.remainingInput = list()
         self.stackContents = list()
 
-    def __init__(self,remain,stack):
+    def __init__(self,state,remain,stack):
+        self.state = state
         self.remainingInput = remain
         self.stackContents = stack
 

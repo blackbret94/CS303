@@ -5,10 +5,10 @@ class Tree:
 	def __init__(self):
 		head = None
 
-	def setHeadNewNode(data):
+	def setHeadNewNode(self, data):
 		head = new Node(data)
 
-	def setHead(node):
+	def setHead(self, node):
 		head = node;
 
 class Node(object):
