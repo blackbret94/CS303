@@ -27,11 +27,13 @@ machFile = open(machFileName,'r')
 # read language size
 langSize = int(machFile.readline())
 
-# read stack
+# read start stack
 possibleStack = machFile.readline()
 if(possibleStack != "null"):
     possibleStack=possibleStack.split()
-    stack = map(int,possibleStack)
+    stack = list(possibleStack)
+else:
+    stack = list()
 
 # read state count
 stateCount = int(machFile.readline())
@@ -84,14 +86,9 @@ while True:
 ### TEST INPUTS ###
 while (True):
     # reset vars
+    # maybe I should use IDs instead of states?
     activeState = []
     nextState = [0]
-
-    # create tree
-    resultTree = tree.Tree()
-
-    # create head
-    resultTree.setHeadNewNode(stateMachine.State())
 
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
@@ -103,27 +100,39 @@ while (True):
     # split string into array
     inst.split()
 
+    # create tree
+    # resultTree = tree.Tree()
+
+    # create head
+    #resultTree.setHeadNewNode(stateMachine.PDANode(states[0],inst,list()))
+
     print "TRAVERSING THE PDA:"
 
     # loop through instructions
     for i in range(0,len(inst)):
-        # update active state
+        # update active state and create a list of next states
         activeState = nextState
         nextState = []
 
         # get the ith instruction
         thisInst = int(inst[i])
 
-        # add to next states
-        for j in range(0,len(activeState)):
-            for k in range(0,len(states[activeState[j]].links[thisInst])):
-                # add state tied to instruction
-                nextState.append(states[activeState[j]].links[thisInst][k])
+        # match to an arc
+        for i,arc in activeState.links:
+            if(arc.consumeInput == i && arc.consumeStack == stack[len(stack)]):
+                # add PDA node
+                # resultTree.head.
 
-            # add epsilon state
-            if (len(states[activeState[j]].links) > langSize):
-                for k in range(0,len(states[activeState[j]].links[langSize])):
-                    nextState.append(states[activeState[j]].links[langSize][k])
+        # add to next states
+        # for j in range(0,len(activeState)):
+        #     for k in range(0,len(states[activeState[j]].links[thisInst])):
+        #         # add state tied to instruction
+        #         nextState.append(states[activeState[j]].links[thisInst][k])
+
+        #     # add epsilon state
+        #     if (len(states[activeState[j]].links) > langSize):
+        #         for k in range(0,len(states[activeState[j]].links[langSize])):
+        #             nextState.append(states[activeState[j]].links[langSize][k])
 
 
     # check if it is accepting

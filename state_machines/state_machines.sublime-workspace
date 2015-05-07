@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"res",
+				"resultTree"
+			],
+			[
 				"start",
 				"startState"
 			],
@@ -64,20 +68,23 @@
 	"buffers":
 	[
 		{
-			"file": "tree.py",
+			"contents": "\"\"\" SIMPLE PDA CREATOR \"\"\"\n\"\"\" BY BRET BLACK 2015 \"\"\"\n\n#####################\n#   START PROGRAM   #\n#####################\n\nimport stateMachine\nimport re\nimport tree\n\n# define variables\nstates = []\nactiveState = []\nnextState = [0]\nstack = [-1] # starts with -1 unless otherwise specified\nlangSize = 0 # this will be read in as input later\n\n# add states from input to the state array\nstateToAdd = stateMachine.setStateName(\"A\")\n\n# open text file\nmachFileName = raw_input(\"What is the name of the file you would like to run?\\n\")\nmachFile = open(machFileName,'r')\n\n### READ SETUP INFORMATION ###\n# read language size\nlangSize = int(machFile.readline())\n\n# read stack\npossibleStack = machFile.readline()\nif(possibleStack != \"null\"):\n    possibleStack=possibleStack.split()\n    stack = map(int,possibleStack)\n\n# read state count\nstateCount = int(machFile.readline())\n\n# create states\nfor i in range(0,stateCount):\n    states.append(stateMachine.State())\n\n# read accepting states\nstatesAccepting = machFile.readline().split()\n\n# set states to accepting\nfor i,s in statesAccepting:\n    # convert to number\n    ss = stateMachine.setStateName(s)\n\n    # set to accepting\n    states[ss].isAccepting(True)\n\n### ADD TRANSITION ARCS ###\nwhile True:\n    inputState = machFile.readline().rstrip('\\n').lower()\n\n    #interpret input\n    if inputState == \"end\":\n        break\n    else:\n        # check to see if it is an accepting state\n        accept = False\n        #print re.match(r\".*[*]\",inputState)\n        if (re.match(r\".*[*]\",inputState) != None):\n            accept = True\n\n        # split along commas\n        split = inputState.strip().split(\",\")\n\n        # read each value\n        startState = stateMachine.getStateName(inputState[0])\n        endState = stateMachine.getStateName(inputState[1])\n        consumedInput = inputState[2]\n        consumedStack = inputState[3]\n        newStack = inputState[4]\n\n        # create new arc\n        newArc = stateMachine.PDAarc(consumedInput,consumedStack,newStack,endState)\n\n        # add arc\n        states[startState].links.append(newArc)\n\n### TEST INPUTS ###\nwhile (True):\n    # reset vars\n    activeState = []\n    nextState = [0]\n\n    # read instructions\n    inst = machFile.readline().rstrip('\\n').lower()\n\n    # see if the user is quitting\n    if (inst == \"\"):\n        break\n        \n    # split string into array\n    inst.split()\n\n    # create tree\n    resultTree = tree.Tree()\n\n    # create head\n    resultTree.setHeadNewNode(stateMachine.PDANode(states[0],inst,list()))\n\n    print \"TRAVERSING THE PDA:\"\n\n    # loop through instructions\n    for i in range(0,len(inst)):\n        # update active state and create a list of next states\n        activeState = nextState\n        nextState = []\n\n        # get the ith instruction\n        thisInst = int(inst[i])\n\n        # add to next states\n        for j in range(0,len(activeState)):\n            for k in range(0,len(states[activeState[j]].links[thisInst])):\n                # add state tied to instruction\n                nextState.append(states[activeState[j]].links[thisInst][k])\n\n            # add epsilon state\n            if (len(states[activeState[j]].links) > langSize):\n                for k in range(0,len(states[activeState[j]].links[langSize])):\n                    nextState.append(states[activeState[j]].links[langSize][k])\n\n\n    # check if it is accepting\n    resultAccepted = False\n    activeState = nextState\n    for i in range(0,len(activeState)):\n        if (states[activeState[i]].acceptingState):\n            resultAccepted = True\n            print \"THE FINAL STATE IS: \"\n            print stateMachine.getStateName(int(activeState[i]))\n            break\n\n    # print result\n    if (resultAccepted):\n        print \"This is an accepting state.\" \n    else :\n        print \"This is NOT an accepting state.\"",
+			"file": "pda.py",
+			"file_size": 3776,
+			"file_write_time": 130747110751758095,
 			"settings":
 			{
-				"buffer_size": 350,
-				"line_ending": "Unix",
-				"name": "\"\"\" A TREE CLASS \"\"\""
+				"buffer_size": 3809,
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "pda.py",
+			"file": "tree.py",
 			"settings":
 			{
-				"buffer_size": 3626,
-				"line_ending": "Unix"
+				"buffer_size": 362,
+				"line_ending": "Unix",
+				"name": "\"\"\" A TREE CLASS \"\"\""
 			}
 		},
 		{
@@ -92,7 +99,7 @@
 			"file": "stateMachine.py",
 			"settings":
 			{
-				"buffer_size": 1937,
+				"buffer_size": 1998,
 				"line_ending": "Unix"
 			}
 		},
@@ -243,24 +250,53 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "tree.py",
+					"file": "pda.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 350,
+						"buffer_size": 3809,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								178,
-								178
+								2672,
+								2672
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1170.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "tree.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 362,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								167,
+								167
 							]
 						],
 						"settings":
@@ -273,40 +309,11 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "pda.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3626,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2133,
-								2133
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 945.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -342,15 +349,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1937,
+						"buffer_size": 1998,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								616,
-								616
+								480,
+								480
 							]
 						],
 						"settings":
@@ -360,7 +367,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 360.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -508,7 +515,7 @@
 		"cols":
 		[
 			0.0,
-			0.494827468401,
+			0.467221834598,
 			1.0
 		],
 		"rows":
@@ -555,7 +562,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 228.0,
+	"side_bar_width": 145.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

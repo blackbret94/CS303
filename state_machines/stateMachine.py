@@ -39,7 +39,7 @@ class State:
     def isAccepting(self,isIt):
         self.acceptingState = isIt
 
-# node of a PDA
+# ID of a PDA
 class PDANode:
     def __init__(self):
         self.state = "none"
