@@ -87,8 +87,8 @@ while True:
 while (True):
     # reset vars
     # maybe I should use IDs instead of states?
-    activeState = []
-    nextState = [0]
+    # activeState = []
+    # nextState = [0]
 
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
@@ -100,7 +100,10 @@ while (True):
     # split string into array
     inst.split()
 
-    # create tree
+    # create new node
+    activeNode = list()
+    nextNode = list(stateMachine.PDANode(0,inst,stack))
+
     # resultTree = tree.Tree()
 
     # create head
@@ -110,18 +113,32 @@ while (True):
 
     # loop through instructions
     for i in range(0,len(inst)):
+        # check for halt
+        if len(nextNode)==0:
+            break
+
         # update active state and create a list of next states
-        activeState = nextState
-        nextState = []
+        activeNode = nextNode.pop(0)
 
         # get the ith instruction
-        thisInst = int(inst[i])
+        thisInst = int(activeNode.remainingInput.pop())
 
         # match to an arc
-        for i,arc in activeState.links:
+        for i,arc in states[activeNode.state].links:
             if(arc.consumeInput == i && arc.consumeStack == stack[len(stack)]):
-                # add PDA node
-                # resultTree.head.
+                # consume input
+                newInput = list(activeNode.remainingInput)
+
+                # modify stack
+                newStack = list(activeNode.stackContents)
+                if arc.consumeStack != '':
+                    newStack.pop(len(newStack))
+
+                if arc.newStack != '':
+                    newStack.append()
+
+                # add node
+                nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
 
         # add to next states
         # for j in range(0,len(activeState)):
