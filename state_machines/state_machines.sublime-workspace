@@ -68,13 +68,10 @@
 	"buffers":
 	[
 		{
-			"contents": "\"\"\" SIMPLE PDA CREATOR \"\"\"\n\"\"\" BY BRET BLACK 2015 \"\"\"\n\n#####################\n#   START PROGRAM   #\n#####################\n\nimport stateMachine\nimport re\nimport tree\n\n# define variables\nstates = []\nactiveState = []\nnextState = [0]\nstack = [-1] # starts with -1 unless otherwise specified\nlangSize = 0 # this will be read in as input later\n\n# add states from input to the state array\nstateToAdd = stateMachine.setStateName(\"A\")\n\n# open text file\nmachFileName = raw_input(\"What is the name of the file you would like to run?\\n\")\nmachFile = open(machFileName,'r')\n\n### READ SETUP INFORMATION ###\n# read language size\nlangSize = int(machFile.readline())\n\n# read stack\npossibleStack = machFile.readline()\nif(possibleStack != \"null\"):\n    possibleStack=possibleStack.split()\n    stack = map(int,possibleStack)\n\n# read state count\nstateCount = int(machFile.readline())\n\n# create states\nfor i in range(0,stateCount):\n    states.append(stateMachine.State())\n\n# read accepting states\nstatesAccepting = machFile.readline().split()\n\n# set states to accepting\nfor i,s in statesAccepting:\n    # convert to number\n    ss = stateMachine.setStateName(s)\n\n    # set to accepting\n    states[ss].isAccepting(True)\n\n### ADD TRANSITION ARCS ###\nwhile True:\n    inputState = machFile.readline().rstrip('\\n').lower()\n\n    #interpret input\n    if inputState == \"end\":\n        break\n    else:\n        # check to see if it is an accepting state\n        accept = False\n        #print re.match(r\".*[*]\",inputState)\n        if (re.match(r\".*[*]\",inputState) != None):\n            accept = True\n\n        # split along commas\n        split = inputState.strip().split(\",\")\n\n        # read each value\n        startState = stateMachine.getStateName(inputState[0])\n        endState = stateMachine.getStateName(inputState[1])\n        consumedInput = inputState[2]\n        consumedStack = inputState[3]\n        newStack = inputState[4]\n\n        # create new arc\n        newArc = stateMachine.PDAarc(consumedInput,consumedStack,newStack,endState)\n\n        # add arc\n        states[startState].links.append(newArc)\n\n### TEST INPUTS ###\nwhile (True):\n    # reset vars\n    activeState = []\n    nextState = [0]\n\n    # read instructions\n    inst = machFile.readline().rstrip('\\n').lower()\n\n    # see if the user is quitting\n    if (inst == \"\"):\n        break\n        \n    # split string into array\n    inst.split()\n\n    # create tree\n    resultTree = tree.Tree()\n\n    # create head\n    resultTree.setHeadNewNode(stateMachine.PDANode(states[0],inst,list()))\n\n    print \"TRAVERSING THE PDA:\"\n\n    # loop through instructions\n    for i in range(0,len(inst)):\n        # update active state and create a list of next states\n        activeState = nextState\n        nextState = []\n\n        # get the ith instruction\n        thisInst = int(inst[i])\n\n        # add to next states\n        for j in range(0,len(activeState)):\n            for k in range(0,len(states[activeState[j]].links[thisInst])):\n                # add state tied to instruction\n                nextState.append(states[activeState[j]].links[thisInst][k])\n\n            # add epsilon state\n            if (len(states[activeState[j]].links) > langSize):\n                for k in range(0,len(states[activeState[j]].links[langSize])):\n                    nextState.append(states[activeState[j]].links[langSize][k])\n\n\n    # check if it is accepting\n    resultAccepted = False\n    activeState = nextState\n    for i in range(0,len(activeState)):\n        if (states[activeState[i]].acceptingState):\n            resultAccepted = True\n            print \"THE FINAL STATE IS: \"\n            print stateMachine.getStateName(int(activeState[i]))\n            break\n\n    # print result\n    if (resultAccepted):\n        print \"This is an accepting state.\" \n    else :\n        print \"This is NOT an accepting state.\"",
 			"file": "pda.py",
-			"file_size": 3776,
-			"file_write_time": 130747110751758095,
 			"settings":
 			{
-				"buffer_size": 3809,
+				"buffer_size": 4794,
 				"line_ending": "Unix"
 			}
 		},
@@ -96,10 +93,13 @@
 			}
 		},
 		{
+			"contents": "\"\"\" CLASSES AND METHODS USEFUL   \"\"\"\n\"\"\" IN MY STATE MACHINE SCRIPTS  \"\"\"\n\"\"\" By BRET BLACK, 2015          \"\"\"\n\n##########################\n#   METHODS AND CLASSES  #\n##########################\n\n# get the nth letter of the alphabet\ndef getStateName(n):\n    return chr(ord('a')+n)\n\n#get numerical value of the nth letter of the alphabet\ndef setStateName(n):\n    return ord(n)-ord('a')\n\nclass State:\n    # blank constructor\n    def __init__(self):\n        # handles the array of lists, accepting 0, 1, or epsilon. Links can hold\n        # states or transitions, depending on the machine\n        self.links = []\n        \n        # is an accepting state?\n        self.acceptingState = False\n\n    # constructor with param\n    def __init__(self,stateArray,isIt):\n        # create links list\n        self.links = stateArray\n        # adjust accepting state\n        self.acceptingState = isIt\n\n    # add states\n    def addState(self,addedState):\n        self.links.append(addedState)\n\n    # modify whether it is accepting\n    def isAccepting(self,isIt):\n        self.acceptingState = isIt\n\n# ID of a PDA\nclass PDANode:\n    def __init__(self):\n        self.state = \"none\"\n        self.remainingInput = list()\n        self.stackContents = list()\n\n    def __init__(self,state,remain,stack):\n        self.state = state\n        self.remainingInput = remain\n        self.stackContents = stack\n\n# PDA transition\nclass PDAarc:\n    def __init__(self):\n        # should never be used \n        self.consumeInput = 0\n        self.consumeStack = 0\n        self.newStack = 0\n        self.nextState = 0\n\n    def __init__(self,consumeInput,consumeStack,newStack,nextState):\n        # the input symbol to consume\n        self.consumeInput = consumeInput\n\n        # the stack symbol to consume (may be epsilon)\n        self.consumeStack = consumeStack\n\n        # the new head of the stack (may be epsilon)\n        self.newStack = newStack\n\n        # this is the state the arc is linked to\n        self.nextState = nextState",
 			"file": "stateMachine.py",
+			"file_size": 1996,
+			"file_write_time": 130754998719843658,
 			"settings":
 			{
-				"buffer_size": 1998,
+				"buffer_size": 1996,
 				"line_ending": "Unix"
 			}
 		},
@@ -259,15 +259,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3809,
+						"buffer_size": 4794,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2672,
-								2672
+								2904,
+								2904
 							]
 						],
 						"settings":
@@ -277,7 +277,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1170.0,
+						"translation.y": 1530.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -295,8 +295,8 @@
 						"selection":
 						[
 							[
-								167,
-								167
+								190,
+								190
 							]
 						],
 						"settings":
@@ -349,15 +349,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1998,
+						"buffer_size": 1996,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								480,
-								480
+								1783,
+								1783
 							]
 						],
 						"settings":

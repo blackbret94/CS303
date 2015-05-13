@@ -117,6 +117,8 @@ while (True):
         if len(nextNode)==0:
             break
 
+        # check if we have reached an accepting state
+
         # update active state and create a list of next states
         activeNode = nextNode.pop(0)
 
@@ -139,6 +141,7 @@ while (True):
 
                 # add node
                 nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
+                print "New node created!"
 
         # add to next states
         # for j in range(0,len(activeState)):
@@ -154,13 +157,13 @@ while (True):
 
     # check if it is accepting
     resultAccepted = False
-    activeState = nextState
-    for i in range(0,len(activeState)):
-        if (states[activeState[i]].acceptingState):
+    activeNode = nextNode
+    for i in range(0,len(activeNode)):
+        if (states[activeNode[i].state].acceptingState):
             resultAccepted = True
-            print "THE FINAL STATE IS: "
-            print stateMachine.getStateName(int(activeState[i]))
-            break
+            print "A FINAL STATE IS: "
+            print stateMachine.getStateName(int(activeNode[i].state))
+            #break
 
     # print result
     if (resultAccepted):
