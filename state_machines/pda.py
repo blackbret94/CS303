@@ -1,5 +1,6 @@
 """ SIMPLE PDA CREATOR """
 """ BY BRET BLACK 2015 """
+# currently does NOT handle epsilon transitions
 
 #####################
 #   START PROGRAM   #
@@ -8,6 +9,15 @@
 import stateMachine
 import re
 import tree
+
+print
+print
+print
+print "************************************"
+print "// // // SIMPLE PDA CREATOR // // //"
+print "// // //   by Bret Black    // // //"
+print "************************************"
+print ""
 
 # define variables
 states = []
@@ -71,7 +81,6 @@ while True:
 
         # split along commas
         split = inputState.strip().split(",")
-        print split
 
         # read each value
         startState = stateMachine.setStateName(split[0])
@@ -114,26 +123,39 @@ while (True):
     print "TRAVERSING THE PDA:"
 
     # loop through instructions
-    for index,i in enumerate(inst):
+    #for index,i in enumerate(inst):
+    while len(nextNode) > 0:
+        #print index
         # check for halt
         if len(nextNode)==0:
             print "Halt!"
             break
 
         # update active state and create a list of next states
+        #oldLen = len(nextNode)
         activeNode = nextNode.pop(0)
 
+        if(len(activeNode.remainingInput)==0):
+            print "Halt!"
+            break;
+
+        #print "Length Change: " + str(oldLen) + "->" + str(len(nextNode))
         # get the ith instruction
-        thisInst = int(activeNode.remainingInput.pop())
+        thisInst = int(activeNode.remainingInput.pop(0))
+        print "Instruction: " + str(thisInst)
+
+        # bool to track if a match has been found
+        matchFound = False
 
         # match to an arc
         for j,arc in enumerate(states[activeNode.state].links):
-            print "Consume Input: " + str(arc.consumeInput) + " / " + str(i) 
-            print "Consume stack: " + str(arc.consumeStack) + " / " + str(stack[len(stack)-1])
+            print "Consume Input: " + str(arc.consumeInput) + " / " + str(thisInst) 
+            print "Consume stack: " + str(arc.consumeStack) + " / " + str(activeNode.stackContents[len(activeNode.stackContents)-1])
 
-            if((arc.consumeInput == i) and (arc.consumeStack == stack[len(stack)-1])):
+            if((int(arc.consumeInput) == int(thisInst)) and (int(arc.consumeStack) == int(activeNode.stackContents[len(activeNode.stackContents)-1]))):
                 # consume input
                 newInput = list(activeNode.remainingInput)
+                print "Remaining input: " + str(newInput)
 
                 # modify stack
                 newStack = list(activeNode.stackContents)
@@ -142,10 +164,26 @@ while (True):
 
                 if arc.newStack != '':
                     newStack.append(arc.newStack)
+                
+                print "Stack: " + str(newStack)
 
                 # add node
                 nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
                 print "New node created!"
+                matchFound = True
+
+        # check for accepting if no matches were found
+        if(matchFound == False and states[activeNode.state].acceptingState):
+            print "**********************************************************"
+            print "AN ACCEPTING STATE WAS FOUND: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  /////"
+            print "**********************************************************"
+            print ""
+        elif(matchFound == False):
+            print "*******************************************"
+            print "TERMINATED AT: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  //"
+            print "*******************************************"
+            print ""
+
 
         # add to next states
         # for j in range(0,len(activeState)):
@@ -160,17 +198,17 @@ while (True):
 
 
     # check if it is accepting
-    resultAccepted = False
-    activeNode = nextNode
-    for i in range(0,len(activeNode)):
-        if (states[activeNode[i].state].acceptingState):
-            resultAccepted = True
-            print "A FINAL STATE IS: " + stateMachine.getStateName(int(activeNode[i].state)).upper()
-            #break
+    # resultAccepted = False
+    # activeNode = nextNode
+    # for i in range(0,len(activeNode)):
+    #     if (states[activeNode[i].state].acceptingState):
+    #         resultAccepted = True
+    #         print "A FINAL STATE IS: " + stateMachine.getStateName(int(activeNode[i].state)).upper()
+    #         #break
 
-    # print result
-    if (resultAccepted):
-        print "This is an accepting state." 
-    else :
-        print "This is NOT an accepting state."
-    print ""
+    # # print result
+    # if (resultAccepted):
+    #     print "This is an accepting state." 
+    # else :
+    #     print "This is NOT an accepting state."
+    # print ""
