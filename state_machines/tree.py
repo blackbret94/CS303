@@ -6,7 +6,7 @@ class Tree:
 		head = None
 
 	def setHeadNewNode(self, data):
-		head = new Node(data)
+		head = Node(data)
 
 	def setHead(self, node):
 		head = node;

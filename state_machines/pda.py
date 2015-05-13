@@ -20,7 +20,8 @@ langSize = 0 # this will be read in as input later
 stateToAdd = stateMachine.setStateName("A")
 
 # open text file
-machFileName = raw_input("What is the name of the file you would like to run?\n")
+#machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFileName = "Examples/input_pda.txt"
 machFile = open(machFileName,'r')
 
 ### READ SETUP INFORMATION ###
@@ -29,26 +30,31 @@ langSize = int(machFile.readline())
 
 # read start stack
 possibleStack = machFile.readline()
-if(possibleStack != "null"):
-    possibleStack=possibleStack.split()
+stack = list()
+
+if(possibleStack != 'null\n'):
     stack = list(possibleStack)
-else:
-    stack = list()
 
 # read state count
 stateCount = int(machFile.readline())
 
 # create states
 for i in range(0,stateCount):
-    states.append(stateMachine.State())
+    states.append(stateMachine.State(list(),False))
 
 # read accepting states
 statesAccepting = machFile.readline().split()
 
 # set states to accepting
-for i,s in statesAccepting:
+print statesAccepting
+
+for i in statesAccepting:
+    print i.lower()
+
     # convert to number
-    ss = stateMachine.setStateName(s)
+    ss = stateMachine.setStateName(i.lower())
+
+    print ss
 
     # set to accepting
     states[ss].isAccepting(True)
@@ -71,8 +77,8 @@ while True:
         split = inputState.strip().split(",")
 
         # read each value
-        startState = stateMachine.getStateName(inputState[0])
-        endState = stateMachine.getStateName(inputState[1])
+        startState = stateMachine.setStateName(inputState[0])
+        endState = stateMachine.setStateName(inputState[1])
         consumedInput = inputState[2]
         consumedStack = inputState[3]
         newStack = inputState[4]
@@ -86,10 +92,6 @@ while True:
 ### TEST INPUTS ###
 while (True):
     # reset vars
-    # maybe I should use IDs instead of states?
-    # activeState = []
-    # nextState = [0]
-
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
 
@@ -98,16 +100,18 @@ while (True):
         break
         
     # split string into array
-    inst.split()
+    inst = list(inst)
+
+    print inst
+    print stack
 
     # create new node
+    newNode = stateMachine.PDANode(0,inst,stack)
+
+    # create queues and append
     activeNode = list()
-    nextNode = list(stateMachine.PDANode(0,inst,stack))
-
-    # resultTree = tree.Tree()
-
-    # create head
-    #resultTree.setHeadNewNode(stateMachine.PDANode(states[0],inst,list()))
+    nextNode = list()
+    nextNode.append(newNode)
 
     print "TRAVERSING THE PDA:"
 
@@ -126,8 +130,8 @@ while (True):
         thisInst = int(activeNode.remainingInput.pop())
 
         # match to an arc
-        for i,arc in states[activeNode.state].links:
-            if(arc.consumeInput == i && arc.consumeStack == stack[len(stack)]):
+        for i,arc in enumerate(states[activeNode.state].links):
+            if((arc.consumeInput == i) and (arc.consumeStack == stack[len(stack)])):
                 # consume input
                 newInput = list(activeNode.remainingInput)
 
