@@ -33,7 +33,7 @@ possibleStack = machFile.readline()
 stack = list()
 
 if(possibleStack != 'null\n'):
-    stack = list(possibleStack)
+    stack = list(possibleStack.rstrip('\n'))
 
 # read state count
 stateCount = int(machFile.readline())
@@ -46,15 +46,11 @@ for i in range(0,stateCount):
 statesAccepting = machFile.readline().split()
 
 # set states to accepting
-print statesAccepting
+print "Accepting States: " + str(statesAccepting)
 
 for i in statesAccepting:
-    print i.lower()
-
     # convert to number
     ss = stateMachine.setStateName(i.lower())
-
-    print ss
 
     # set to accepting
     states[ss].isAccepting(True)
@@ -75,13 +71,14 @@ while True:
 
         # split along commas
         split = inputState.strip().split(",")
+        print split
 
         # read each value
-        startState = stateMachine.setStateName(inputState[0])
-        endState = stateMachine.setStateName(inputState[1])
-        consumedInput = inputState[2]
-        consumedStack = inputState[3]
-        newStack = inputState[4]
+        startState = stateMachine.setStateName(split[0])
+        endState = stateMachine.setStateName(split[1])
+        consumedInput = split[2]
+        consumedStack = split[3]
+        newStack = split[4]
 
         # create new arc
         newArc = stateMachine.PDAarc(consumedInput,consumedStack,newStack,endState)
@@ -102,8 +99,9 @@ while (True):
     # split string into array
     inst = list(inst)
 
-    print inst
-    print stack
+    print "Instructions: " + str(inst)
+    print "Stack: " + str(stack)
+    print ""
 
     # create new node
     newNode = stateMachine.PDANode(0,inst,stack)
@@ -116,12 +114,11 @@ while (True):
     print "TRAVERSING THE PDA:"
 
     # loop through instructions
-    for i in range(0,len(inst)):
+    for index,i in enumerate(inst):
         # check for halt
         if len(nextNode)==0:
+            print "Halt!"
             break
-
-        # check if we have reached an accepting state
 
         # update active state and create a list of next states
         activeNode = nextNode.pop(0)
@@ -130,18 +127,21 @@ while (True):
         thisInst = int(activeNode.remainingInput.pop())
 
         # match to an arc
-        for i,arc in enumerate(states[activeNode.state].links):
-            if((arc.consumeInput == i) and (arc.consumeStack == stack[len(stack)])):
+        for j,arc in enumerate(states[activeNode.state].links):
+            print "Consume Input: " + str(arc.consumeInput) + " / " + str(i) 
+            print "Consume stack: " + str(arc.consumeStack) + " / " + str(stack[len(stack)-1])
+
+            if((arc.consumeInput == i) and (arc.consumeStack == stack[len(stack)-1])):
                 # consume input
                 newInput = list(activeNode.remainingInput)
 
                 # modify stack
                 newStack = list(activeNode.stackContents)
                 if arc.consumeStack != '':
-                    newStack.pop(len(newStack))
+                    newStack.pop(len(newStack)-1)
 
                 if arc.newStack != '':
-                    newStack.append()
+                    newStack.append(arc.newStack)
 
                 # add node
                 nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
@@ -165,8 +165,7 @@ while (True):
     for i in range(0,len(activeNode)):
         if (states[activeNode[i].state].acceptingState):
             resultAccepted = True
-            print "A FINAL STATE IS: "
-            print stateMachine.getStateName(int(activeNode[i].state))
+            print "A FINAL STATE IS: " + stateMachine.getStateName(int(activeNode[i].state)).upper()
             #break
 
     # print result
@@ -174,3 +173,4 @@ while (True):
         print "This is an accepting state." 
     else :
         print "This is NOT an accepting state."
+    print ""
