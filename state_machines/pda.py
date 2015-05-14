@@ -104,6 +104,11 @@ while (True):
     # see if the user is quitting
     if (inst == ""):
         break
+
+    print "*********************************"
+    print "START NEW INSTRUCTION SET  "
+    print "*********************************"
+    print ""
         
     # split string into array
     inst = list(inst)
@@ -125,57 +130,55 @@ while (True):
     # loop through instructions
     #for index,i in enumerate(inst):
     while len(nextNode) > 0:
-        #print index
-        # check for halt
-        if len(nextNode)==0:
-            print "Halt!"
-            break
+        # bool to track if a transition match has been found
+        matchFound = False
 
         # update active state and create a list of next states
         #oldLen = len(nextNode)
         activeNode = nextNode.pop(0)
 
-        if(len(activeNode.remainingInput)==0):
-            print "Halt!"
-            break;
+        if(len(activeNode.remainingInput)!=0):
+            # get the ith instruction
+            thisInst = int(activeNode.remainingInput.pop(0))
+            print "Instruction: " + str(thisInst)
 
-        #print "Length Change: " + str(oldLen) + "->" + str(len(nextNode))
-        # get the ith instruction
-        thisInst = int(activeNode.remainingInput.pop(0))
-        print "Instruction: " + str(thisInst)
+            # match to an arc
+            for j,arc in enumerate(states[activeNode.state].links):
+                print "Consume Input: " + str(arc.consumeInput) + " / " + str(thisInst) 
+                print "Consume stack: " + str(arc.consumeStack) + " / " + str(activeNode.stackContents[len(activeNode.stackContents)-1])
 
-        # bool to track if a match has been found
-        matchFound = False
+                # does consumeInput match? is it epsilon? does the stack match?
+                if((int(arc.consumeInput) == int(thisInst) or int(arc.consumeInput)>=langSize) and (int(arc.consumeStack) == int(activeNode.stackContents[len(activeNode.stackContents)-1]))):
+                    # copy input
+                    newInput = list(activeNode.remainingInput)
 
-        # match to an arc
-        for j,arc in enumerate(states[activeNode.state].links):
-            print "Consume Input: " + str(arc.consumeInput) + " / " + str(thisInst) 
-            print "Consume stack: " + str(arc.consumeStack) + " / " + str(activeNode.stackContents[len(activeNode.stackContents)-1])
+                     # restore stack if epsilon
+                    if(int(arc.consumeInput)>=langSize):
+                        newInput.insert(0,str(thisInst))
+                        print "Epsilon detected!"
 
-            if((int(arc.consumeInput) == int(thisInst)) and (int(arc.consumeStack) == int(activeNode.stackContents[len(activeNode.stackContents)-1]))):
-                # consume input
-                newInput = list(activeNode.remainingInput)
-                print "Remaining input: " + str(newInput)
+                    # print input
+                    print "Remaining input: " + str(newInput)
 
-                # modify stack
-                newStack = list(activeNode.stackContents)
-                if arc.consumeStack != '':
-                    newStack.pop(len(newStack)-1)
+                    # modify stack
+                    newStack = list(activeNode.stackContents)
+                    if arc.consumeStack != '':
+                        newStack.pop(len(newStack)-1)
 
-                if arc.newStack != '':
-                    newStack.append(arc.newStack)
-                
-                print "Stack: " + str(newStack)
+                    if arc.newStack != '':
+                        newStack.append(arc.newStack)
+                    
+                    print "Stack: " + str(newStack)
 
-                # add node
-                nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
-                print "New node created!"
-                matchFound = True
+                    # add node
+                    nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
+                    print "New node created! " + str(j)
+                    matchFound = True
 
         # check for accepting if no matches were found
         if(matchFound == False and states[activeNode.state].acceptingState):
             print "**********************************************************"
-            print "AN ACCEPTING STATE WAS FOUND: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  /////"
+            print "AN ACCEPTING STATE WAS FOUND: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  //**//**//**//**//**//**"
             print "**********************************************************"
             print ""
         elif(matchFound == False):
@@ -183,32 +186,3 @@ while (True):
             print "TERMINATED AT: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  //"
             print "*******************************************"
             print ""
-
-
-        # add to next states
-        # for j in range(0,len(activeState)):
-        #     for k in range(0,len(states[activeState[j]].links[thisInst])):
-        #         # add state tied to instruction
-        #         nextState.append(states[activeState[j]].links[thisInst][k])
-
-        #     # add epsilon state
-        #     if (len(states[activeState[j]].links) > langSize):
-        #         for k in range(0,len(states[activeState[j]].links[langSize])):
-        #             nextState.append(states[activeState[j]].links[langSize][k])
-
-
-    # check if it is accepting
-    # resultAccepted = False
-    # activeNode = nextNode
-    # for i in range(0,len(activeNode)):
-    #     if (states[activeNode[i].state].acceptingState):
-    #         resultAccepted = True
-    #         print "A FINAL STATE IS: " + stateMachine.getStateName(int(activeNode[i].state)).upper()
-    #         #break
-
-    # # print result
-    # if (resultAccepted):
-    #     print "This is an accepting state." 
-    # else :
-    #     print "This is NOT an accepting state."
-    # print ""
