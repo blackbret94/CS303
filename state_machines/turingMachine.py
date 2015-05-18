@@ -74,13 +74,14 @@ while True:
         startState = stateMachine.setStateName(split[0])
         endState = stateMachine.setStateName(split[1])
         newSymbol = split[2]
-        moveDir = split[3]
+        consumed = split[3]
+        moveDir = split[4]
 
         # create new arc
         newArc = stateMachine.TuringArc(newSymbol,endState,moveDir)
 
         # add arc
-        states[startState].links.append(newArc)
+        states[startState].links.insert(consumed,newArc)
 
 ### TEST INPUTS ###
 while (True):
