@@ -1,6 +1,5 @@
 """ SIMPLE TURING MACHINE CREATOR """
 """       BY BRET BLACK 2015      """
-# currently does NOT handle epsilon transitions
 
 #####################
 #   START PROGRAM   #
@@ -20,30 +19,25 @@ print "***********************************************"
 print ""
 
 # define variables
-states = []
-activeState = []
-nextState = [0]
-stack = [-1] # starts with -1 unless otherwise specified
+tape = list()
+states = list()
+#activeState = []
+#nextState = [0]
+#stack = [-1] # starts with -1 unless otherwise specified
 langSize = 0 # this will be read in as input later
+tapePos = 0
 
 # add states from input to the state array
 stateToAdd = stateMachine.setStateName("A")
 
 # open text file
-#machFileName = raw_input("What is the name of the file you would like to run?\n")
-machFileName = "Examples/input_pda.txt"
+machFileName = raw_input("What is the name of the file you would like to run?\n")
+#machFileName = "Examples/input_pda.txt"
 machFile = open(machFileName,'r')
 
 ### READ SETUP INFORMATION ###
 # read language size
 langSize = int(machFile.readline())
-
-# read start stack
-possibleStack = machFile.readline()
-stack = list()
-
-if(possibleStack != 'null\n'):
-    stack = list(possibleStack.rstrip('\n'))
 
 # read state count
 stateCount = int(machFile.readline())
@@ -65,7 +59,7 @@ for i in statesAccepting:
     # set to accepting
     states[ss].isAccepting(True)
 
-### ADD TRANSITION ARCS ###
+### ADD TRANSITION FUNCTIONS ###
 while True:
     inputState = machFile.readline().rstrip('\n').lower()
 
@@ -73,24 +67,17 @@ while True:
     if inputState == "end":
         break
     else:
-        # check to see if it is an accepting state
-        accept = False
-        #print re.match(r".*[*]",inputState)
-        if (re.match(r".*[*]",inputState) != None):
-            accept = True
-
         # split along commas
         split = inputState.strip().split(",")
 
         # read each value
         startState = stateMachine.setStateName(split[0])
         endState = stateMachine.setStateName(split[1])
-        consumedInput = split[2]
-        consumedStack = split[3]
-        newStack = split[4]
+        newSymbol = split[2]
+        moveDir = split[3]
 
         # create new arc
-        newArc = stateMachine.PDAarc(consumedInput,consumedStack,newStack,endState)
+        newArc = stateMachine.TuringArc(newSymbol,endState,moveDir)
 
         # add arc
         states[startState].links.append(newArc)

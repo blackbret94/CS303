@@ -86,3 +86,21 @@ class TuringID:
         self.state = inState
         self.pos = curPos
         self.tape = tapePort
+
+# Turing transition
+class TuringArc:
+    def __init__(self):
+        # should never be used 
+        self.newSymbol = 0
+        self.nextState = 0
+        self.moveDir = 0
+
+    def __init__(self,newSymbol,nextState,moveDir):
+        # the new head of the stack (may be epsilon)
+        self.newSymbol = newSymbol
+
+        # this is the state the arc is linked to
+        self.nextState = nextState
+
+        # 0 to move left, 1 to move right
+        self.moveDir = moveDir
