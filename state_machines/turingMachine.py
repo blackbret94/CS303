@@ -5,6 +5,8 @@
 #   START PROGRAM   #
 #####################
 
+# note that this machine uses -1 as a blank input
+
 import stateMachine
 import re
 import tree
@@ -21,7 +23,7 @@ print ""
 # define variables
 tape = list()
 states = list()
-#activeState = []
+activeState = 0
 #nextState = [0]
 #stack = [-1] # starts with -1 unless otherwise specified
 langSize = 0 # this will be read in as input later
@@ -31,8 +33,8 @@ tapePos = 0
 stateToAdd = stateMachine.setStateName("A")
 
 # open text file
-machFileName = raw_input("What is the name of the file you would like to run?\n")
-#machFileName = "Examples/input_pda.txt"
+#machFileName = raw_input("What is the name of the file you would like to run?\n")
+machFileName = "Examples/input_turing.txt"
 machFile = open(machFileName,'r')
 
 ### READ SETUP INFORMATION ###
@@ -44,7 +46,13 @@ stateCount = int(machFile.readline())
 
 # create states
 for i in range(0,stateCount):
+    # create state with empty array
     states.append(stateMachine.State(list(),False))
+
+    # add array
+    for j in range(0,langSize):
+        # -1 is the blank input
+        states[i].links.append(-1)
 
 # read accepting states
 statesAccepting = machFile.readline().split()
@@ -73,19 +81,22 @@ while True:
         # read each value
         startState = stateMachine.setStateName(split[0])
         endState = stateMachine.setStateName(split[1])
-        newSymbol = split[2]
-        consumed = split[3]
-        moveDir = split[4]
+        consumed = int(split[2])
+        newSymbol = int(split[3])
+        moveDir = int(split[4])
 
         # create new arc
         newArc = stateMachine.TuringArc(newSymbol,endState,moveDir)
 
         # add arc
-        states[startState].links.insert(consumed,newArc)
+        states[startState].links.insert(int(consumed),newArc)
 
 ### TEST INPUTS ###
 while (True):
     # reset vars
+    tapePos = 0
+    activeState = 0
+
     # read instructions
     inst = machFile.readline().rstrip('\n').lower()
 
@@ -101,76 +112,61 @@ while (True):
     # split string into array
     inst = list(inst)
 
+    # print ins to tape
+    tape = inst
+
     print "Instructions: " + str(inst)
-    print "Stack: " + str(stack)
+    #print "Stack: " + str(stack)
     print ""
 
-    # create new node
-    newNode = stateMachine.PDANode(0,inst,stack)
+    print "TRAVERSING THE TURING MACHINE:"
 
-    # create queues and append
-    activeNode = list()
-    nextNode = list()
-    nextNode.append(newNode)
+    # run the machine until halt
+    while True:
+        # expand tape if neccessary
+        while(len(tape) <= tapePos):
+            tape.append(-1)
 
-    print "TRAVERSING THE PDA:"
+        # find match
+        if(states[activeState].links[int(tape[tapePos])] != -1):
+            # handle match
+            print "Match found!"
+            # save link
+            thisLink = states[activeState].links[int(tape[tapePos])]
 
-    # loop through instructions
-    #for index,i in enumerate(inst):
-    while len(nextNode) > 0:
-        # bool to track if a transition match has been found
-        matchFound = False
+            # write to tape
+            tape[tapePos] = thisLink.newSymbol
 
-        # update active state and create a list of next states
-        #oldLen = len(nextNode)
-        activeNode = nextNode.pop(0)
+            # change state
+            activeState = int(thisLink.nextState)
 
-        if(len(activeNode.remainingInput)!=0):
-            # get the ith instruction
-            thisInst = int(activeNode.remainingInput.pop(0))
-            print "Instruction: " + str(thisInst)
+            # move along tape
+            if(thisLink.moveDir == 0):
+                # move left
+                if(tapePos > 0):
+                    tapePos -= 1
+                else:
+                    print "Error! Tried to move left of the start"
 
-            # match to an arc
-            for j,arc in enumerate(states[activeNode.state].links):
-                print "Consume Input: " + str(arc.consumeInput) + " / " + str(thisInst) 
-                print "Consume stack: " + str(arc.consumeStack) + " / " + str(activeNode.stackContents[len(activeNode.stackContents)-1])
+            elif(thisLink.moveDir == 1):
+                # move right
+                tapePos += 1
+        else:
+            # no match found, halt
+            print "halting"
 
-                # does consumeInput match? is it epsilon? does the stack match?
-                if((int(arc.consumeInput) == int(thisInst) or int(arc.consumeInput)>=langSize) and (int(arc.consumeStack) == int(activeNode.stackContents[len(activeNode.stackContents)-1]))):
-                    # copy input
-                    newInput = list(activeNode.remainingInput)
+            if(states[activeState].acceptingState):
+                print "**********************************************************"
+                print "AN ACCEPTING STATE WAS FOUND: " + stateMachine.getStateName(int(activeState)).upper() + "  //**//**//**//**//**//**"
+                print "**********************************************************"
+                print ""
+            else:
+                print "*******************************************"
+                print "TERMINATED AT: " + stateMachine.getStateName(int(activeState)).upper() + "  //"
+                print "*******************************************"
+                print ""
 
-                     # restore stack if epsilon
-                    if(int(arc.consumeInput)>=langSize):
-                        newInput.insert(0,str(thisInst))
-                        print "Epsilon detected!"
+            print "Tape: " + str(tape) + " Position: " + str(tapePos) + " State: " + str(activeState)
+            break
 
-                    # print input
-                    print "Remaining input: " + str(newInput)
-
-                    # modify stack
-                    newStack = list(activeNode.stackContents)
-                    if arc.consumeStack != '':
-                        newStack.pop(len(newStack)-1)
-
-                    if arc.newStack != '':
-                        newStack.append(arc.newStack)
-                    
-                    print "Stack: " + str(newStack)
-
-                    # add node
-                    nextNode.append(stateMachine.PDANode(arc.nextState,newInput,newStack))
-                    print "New node created! " + str(j)
-                    matchFound = True
-
-        # check for accepting if no matches were found
-        if(matchFound == False and states[activeNode.state].acceptingState):
-            print "**********************************************************"
-            print "AN ACCEPTING STATE WAS FOUND: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  //**//**//**//**//**//**"
-            print "**********************************************************"
-            print ""
-        elif(matchFound == False):
-            print "*******************************************"
-            print "TERMINATED AT: " + stateMachine.getStateName(int(activeNode.state)).upper() + "  //"
-            print "*******************************************"
-            print ""
+        print "Tape: " + str(tape) + " Position: " + str(tapePos) + " State: " + str(activeState)

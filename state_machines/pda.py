@@ -1,6 +1,5 @@
 """ SIMPLE PDA CREATOR """
 """ BY BRET BLACK 2015 """
-# currently does NOT handle epsilon transitions
 
 #####################
 #   START PROGRAM   #
@@ -30,8 +29,8 @@ langSize = 0 # this will be read in as input later
 stateToAdd = stateMachine.setStateName("A")
 
 # open text file
-#machFileName = raw_input("What is the name of the file you would like to run?\n")
-machFileName = "Examples/input_pda.txt"
+machFileName = raw_input("What is the name of the file you would like to run?\n")
+#machFileName = "Examples/input_pda.txt"
 machFile = open(machFileName,'r')
 
 ### READ SETUP INFORMATION ###
@@ -73,12 +72,6 @@ while True:
     if inputState == "end":
         break
     else:
-        # check to see if it is an accepting state
-        accept = False
-        #print re.match(r".*[*]",inputState)
-        if (re.match(r".*[*]",inputState) != None):
-            accept = True
-
         # split along commas
         split = inputState.strip().split(",")
 
