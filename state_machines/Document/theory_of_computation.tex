@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+%Gummi|065|=)
+\title{\textbf{Theory of Computation}}
+\author{Bret Black}
+\date{}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\subsection{Why Machines?}
+The word ``machine`` is often used to describe a mechanical device that exists in the real world.  The word “machine” can also be used to describe a theoretical device that helps mathematicians and computer scientists conceptualize problems.  These machines form the foundation of computer science and can more simply describe which problems can and cannot be solved by a physical computer.
+
+Four machines will be examined across the following pages: DFAs, NFAs, PDAs, and Turing Machines.  Each machine will be examined first individually, then compared to other machines and languages.  Advantages and shortcomings of each machine will be discussed, as well as their potential equivalences.
+
+As each machine is dissected, the source code for the author’s implementation will be provided and discussed.  Sample inputs and outputs for this code will be provided.
+
+\subsection{Overview of Machines}
+The most basic machine to be discussed is the Deterministic Finite Automata, or DFA.  A DFA is a simple state machine that accepts a series of instructions and returns a single output.  State links must have exclusive key-value pairings.  These machines can be used to solve very simple problems.
+
+The next machine to be discussed is the Non-Deterministic Finite Automata, or NFA.  The NFA is also a state machine, but unlike the DFA the NFA allows for multiple outputs.  Links need not conform to exclusive key-value pairings - an infinite number of values can be paired with a particular key.  The NFA also features epsilon transitions, which allow a machine to advance to another state without consuming any input.
+
+Pushdown Automata, or PDA, takes the concept of a NFA and implements a stack.  Unlike the input, which can only be consumed, the stack grows and shrinks as the machine passes through states.  Links are no longer simple key-value pairings, but also consume from the stack and push to the stack. Like the NFA, PDAs are capable of multiple outputs.  Instantaneous Descriptions are used to describe the machine at any given point.  PDAs also allow the use of epsilon transitions.
+
+The final machine to be discussed is the Turing Machine, which most closely simulates problems that can be solved on a physical computer.  The Turing Machine is conceptualized as an infinite tape on which data can be read and written.  A tape head moves across this tape, reading and writing along the way.
+
+\subsection{Overview of Languages}
+Two types of languages will be discussed: context-free languages and regular languages.  While neither of these languages were implemented, they will be referenced and used to explain the advantages of the machines.
+
+Regular languages are simply defined as languages that can be expressed by regular expressions.  Regular expressions are a popular tool for parsing text, instructions, and programming languages.  They are particularly useful for expressing finite automata.  Unfortunately, they are limited in power and incapable of expressing advanced computation.
+
+Context-free languages rely on combinations of terminals and non-terminals.  This allows for interpretations of palindromes.  Context-free languages can also be ambiguous, which means they can have multiple derivations.  These properties make context-free languages more powerful than regularly languages.  They are particularly useful for expressing PDAs.  It is worth noting that all regular languages are context-free languages.
+\\ \\ 
+\textbf{Pumping Lemma}\\
+	Regular and context-free languages contain what is known as the pumping lemma.  The pumping lemma is a necessary property which states that the middle-section of a word in a regular language must be able to be pumped infinitely while producing a word that is still a part of the same language.
+	
+The pumping lemma is most commonly used to test the regularity of a particular language.  If the pumping lemma fails, the language’s regularity has been disproven.  The pumping lemma was initially developed for regular languages, but was generalized to apply to context-free languages as well.
+
+\section{Machines}
+\subsection{DFA}
+\subsection{NFA}
+\subsection{PDA}
+\subsection{Turing Machine}
+\section{Machine Relations}
+\subsection{Chomsky Hierarchy}
+\subsection{Equivalence}
+\section{Conclusion}
+\end{document}
