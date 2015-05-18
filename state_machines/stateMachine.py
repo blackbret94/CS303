@@ -72,3 +72,17 @@ class PDAarc:
 
         # this is the state the arc is linked to
         self.nextState = nextState
+
+# Turing ID
+class TuringID:
+    # should never be used
+    def __init__(self):
+        self.state = 0
+        self.pos = 0
+        self.tape = list()
+
+    # should be used
+    def __init__(self,inState,curPos,tapePort):
+        self.state = inState
+        self.pos = curPos
+        self.tape = tapePort
